@@ -1,19 +1,27 @@
-import React from "react";
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Markup only -- renders through OrderBox. deleteOrderHandler and
+ * processOrderHandler are untouched.
+ * ========================================================================== */
+
 import { Box, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import TabPanel from "@mui/lab/TabPanel";
+import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrievePausedOrders } from "./selector";
-import { Messages, serverApi } from "../../../lib/config";
-import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
-import { Product } from "../../../lib/types/product";
+import { Messages } from "../../../lib/config";
+import { Order, OrderUpdateInput } from "../../../lib/types/order";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import { T } from "../../../lib/types/common";
 import { useGlobals } from "../../hooks/useGlobals";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderService";
+import OrderBox from "./OrderBox";
 
 /** REDUX SLICE & SELECTOR **/
 const pausedOrderRetriever = createSelector(
@@ -81,82 +89,46 @@ export default function PausedOrders(props: PausedOrdersProps) {
   return (
     <TabPanel value={"1"}>
       <Stack>
-        {pausedOrders?.map((order: Order) => {
-          return (
-            <Box key={order._id} className={"order-main-box"}>
-              <Box className={"order-box-scroll"}>
-                {order?.orderItems?.map((item: OrderItem) => {
-                  const product: Product = order.productData.filter(
-                    (ele: Product) => item.productId === ele._id,
-                  )[0];
-                  const imagePath = `${serverApi}/${product.productImages[0]}`;
-                  return (
-                    <Box key={item._id} className={"orders-name-price"}>
-                      <img src={imagePath} className={"order-dish-img"} />
-                      <p className={"title-dish"}>{product.productName}</p>
-                      <Box className={"price-box"}>
-                        <p>${item.itemPrice}</p>
-                        <img src={"/icons/close.svg"} />
-                        <p>{item.itemQuantity}</p>
-                        <img src={"/icons/pause.svg"} />
-                        <p style={{ marginLeft: "15px" }}>
-                          ${item.itemQuantity * item.itemPrice}
-                        </p>
-                      </Box>
-                    </Box>
-                  );
-                })}
-              </Box>
-
-              <Box className={"total-price-box"}>
-                <Box className={"box-total"}>
-                  <p>Product price</p>
-                  <p>${order.orderTotal - order.orderDelivery}</p>
-                  <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
-                  <p>Delivery cost</p>
-                  <p>${order.orderDelivery}</p>
-                  <img
-                    src={"/icons/pause.svg"}
-                    style={{ marginLeft: "20px" }}
-                  />
-                  <p>Total</p>
-                  <p>${order.orderTotal}</p>
-                </Box>
+        {pausedOrders?.map((order: Order) => (
+          <OrderBox
+            key={order._id}
+            order={order}
+            statusLabel="Preparing"
+            statusClass="ng-pill--amber"
+            actions={
+              <>
                 <Button
                   value={order._id}
-                  variant="contained"
-                  color="secondary"
-                  className={"cancel-button"}
+                  className="ng-btn ng-btn--danger"
+                  variant="outlined"
                   onClick={deleteOrderHandler}
                 >
                   Cancel
                 </Button>
                 <Button
                   value={order._id}
+                  className="ng-btn ng-btn--primary"
                   variant="contained"
-                  className={"pay-button"}
                   onClick={processOrderHandler}
                 >
                   Payment
                 </Button>
-              </Box>
-            </Box>
-          );
-        })}
+              </>
+            }
+          />
+        ))}
 
-        {!pausedOrders ||
-          (pausedOrders.length === 0 && (
-            <Box
-              display={"flex"}
-              flexDirection={"row"}
-              justifyContent={"center"}
-            >
-              <img
-                src={"/icons/noimage-list.svg"}
-                style={{ width: 300, height: 300 }}
-              />
-            </Box>
-          ))}
+        {!pausedOrders || pausedOrders.length === 0 ? (
+          <Box className={"order-empty"}>
+            <ReceiptLongOutlinedIcon />
+            <span>No paused orders yet.</span>
+          </Box>
+        ) : (
+          <Box className={"order-count"}>
+            Showing {pausedOrders.length} paused order
+            {pausedOrders.length === 1 ? "" : "s"}
+          </Box>
+        )}
       </Stack>
     </TabPanel>
   );

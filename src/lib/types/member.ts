@@ -1,3 +1,11 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * EDITED
+ *
+ * MemberUpdateInput.memberImage is now string | File -- Settings.tsx assigns a
+ * File to it once the user picks an image, which the old string type hid.
+ * ========================================================================== */
+
 import type { MemberStatus, MemberType } from "../enums/member.enum";
 
 export interface Member {
@@ -38,5 +46,6 @@ export interface MemberUpdateInput {
   memberPassword?: string;
   memberAddress?: string;
   memberDesc?: string;
-  memberImage?: string;
+  /** the stored path while nothing is chosen, a File once the user picks one */
+  memberImage?: string | File;
 }

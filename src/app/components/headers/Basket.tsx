@@ -1,11 +1,19 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Markup only -- the cart drawer now shows subtotal / shipping / total and a
+ * quantity stepper. proceedOrderHandler and the OrderService call are untouched.
+ * ========================================================================== */
+
 import React from "react";
 import { Box, Button, Stack } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Menu from "@mui/material/Menu";
-import CancelIcon from "@mui/icons-material/Cancel";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CloseIcon from "@mui/icons-material/Close";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
 import { Messages, serverApi } from "../../../lib/config";
@@ -30,7 +38,7 @@ export default function Basket(props: BasketProps) {
     0,
   );
   const shippingCost: number = itemsPrice < 100 ? 5 : 0;
-  const totalPrice = (itemsPrice + shippingCost).toFixed(1);
+  const totalPrice = (itemsPrice + shippingCost).toFixed(2);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -62,8 +70,9 @@ export default function Basket(props: BasketProps) {
   };
 
   return (
-    <Box className={"hover-line"}>
+    <Box>
       <IconButton
+        className="ng-nav-icon"
         aria-label="cart"
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
@@ -71,112 +80,87 @@ export default function Basket(props: BasketProps) {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <Badge badgeContent={cartItems.length} color="secondary">
-          <img src={"/icons/shopping-cart.svg"} />
+        <Badge badgeContent={cartItems.length}>
+          <ShoppingBagOutlinedIcon fontSize="small" />
         </Badge>
       </IconButton>
+
       <Menu
         anchorEl={anchorEl}
-        id="account-menu"
+        id="cart-menu"
+        className="ng-cart-menu"
         open={open}
         onClose={handleClose}
-        // onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1.5,
-            "& .MuiAvatar-root": {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
-          },
-        }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Stack className={"basket-frame"}>
-          <Box className={"all-check-box"}>
-            {cartItems.length === 0 ? (
-              <div>Cart is empty!</div>
-            ) : (
-              <Stack flexDirection={"row"}>
-                <div>Cart Products:</div>
-                <DeleteForeverIcon
-                  sx={{ ml: "5px", cursor: "pointer" }}
-                  color={"primary"}
-                  onClick={() => onDeleteAll()}
-                />
-              </Stack>
-            )}
+          <Box className={"cart-head"}>
+            <span className={"cart-title"}>Your Cart ({cartItems.length})</span>
+            {cartItems.length !== 0 ? (
+              <span className={"clear-all"} onClick={() => onDeleteAll()}>
+                <DeleteOutlineIcon sx={{ fontSize: 16 }} />
+                Clear all
+              </span>
+            ) : null}
           </Box>
 
-          <Box className={"orders-main-wrapper"}>
-            <Box className={"orders-wrapper"}>
+          {cartItems.length === 0 ? (
+            <Box className={"cart-empty"}>Your cart is empty.</Box>
+          ) : (
+            <Box className={"orders-wrapper ng-scroll"}>
               {cartItems.map((item: CartItem) => {
                 const imagePath = `${serverApi}/${item.image}`;
                 return (
                   <Box className={"basket-info-box"} key={item._id}>
+                    <img src={imagePath} alt={item.name} className={"product-img"} />
+                    <Box className={"item-text"}>
+                      <span className={"product-name"}>{item.name}</span>
+                      <p className={"product-price"}>
+                        ${item.price.toFixed(2)}
+                      </p>
+                    </Box>
+                    <Box className={"qty-box"}>
+                      <button onClick={() => onRemove(item)} aria-label="remove one">
+                        −
+                      </button>
+                      <span className={"qty-val"}>{item.quantity}</span>
+                      <button onClick={() => onAdd(item)} aria-label="add one">
+                        +
+                      </button>
+                    </Box>
                     <div
                       onClick={() => onDelete(item)}
                       className={"cancel-btn"}
+                      aria-label="remove item"
                     >
-                      <CancelIcon color={"primary"} />
+                      <CloseIcon sx={{ fontSize: 16 }} />
                     </div>
-                    <img src={imagePath} className={"product-img"} />
-                    <span className={"product-name"}>{item.name}</span>
-                    <p className={"product-price"}>
-                      ${item.price} x {item.quantity}
-                    </p>
-                    <Box sx={{ minWidth: 120 }}>
-                      <div className="col-2">
-                        <button
-                          onClick={() => onRemove(item)}
-                          className="remove"
-                        >
-                          -
-                        </button>{" "}
-                        <button onClick={() => onAdd(item)} className="add">
-                          +
-                        </button>
-                      </div>
-                    </Box>
                   </Box>
                 );
               })}
             </Box>
-          </Box>
+          )}
+
           {cartItems.length !== 0 ? (
             <Box className={"basket-order"}>
-              <span className={"price"}>
-                Total: ${totalPrice} ({itemsPrice} + {shippingCost})
-              </span>
-              <Button
-                onClick={proceedOrderHandler}
-                startIcon={<ShoppingCartIcon />}
-                variant={"contained"}
-              >
-                Order
+              <Box className={"sum-row"}>
+                <span>Subtotal</span>
+                <span>${itemsPrice.toFixed(2)}</span>
+              </Box>
+              <Box className={"sum-row"}>
+                <span>Shipping</span>
+                <span>${shippingCost.toFixed(2)}</span>
+              </Box>
+              <Box className={"sum-row total"}>
+                <span>Total</span>
+                <span>${totalPrice}</span>
+              </Box>
+              <Button onClick={proceedOrderHandler} variant={"contained"}>
+                Checkout
               </Button>
             </Box>
-          ) : (
-            ""
-          )}
+          ) : null}
         </Stack>
       </Menu>
     </Box>

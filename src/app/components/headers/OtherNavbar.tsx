@@ -1,18 +1,28 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Markup only. Same strip + artwork split as HomeNavbar, plus a page title
+ * and breadcrumb derived from the current route.
+ * ========================================================================== */
+
 import {
   Box,
   Button,
   Container,
+  IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
   Stack,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import { Logout } from "@mui/icons-material";
 import Basket from "./Basket";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
-import { Logout } from "@mui/icons-material";
 
 interface OtherNavbarProps {
   cartItems: CartItem[];
@@ -20,13 +30,21 @@ interface OtherNavbarProps {
   onDelete: (item: CartItem) => void;
   onRemove: (item: CartItem) => void;
   onDeleteAll: () => void;
-  setSignupOpen: (isOpen: boolean) => void;
-  setLoginOpen: (isOpen: boolean) => void;
   handleLogoutClick: (e: React.MouseEvent<HTMLElement>) => void;
   anchorEl: HTMLElement | null;
   handleCloseLogout: () => void;
   handleLogoutRequest: () => void;
 }
+
+/** pathname -> banner title, so every inner page gets the same dark header */
+const PAGE_TITLES: { path: string; title: string }[] = [
+  { path: "/products", title: "Products" },
+  { path: "/orders", title: "Orders" },
+  { path: "/member-page", title: "My Page" },
+  { path: "/help", title: "Help Center" },
+  { path: "/login", title: "Login" },
+  { path: "/register", title: "Register" },
+];
 
 export default function OtherNavbar(props: OtherNavbarProps) {
   const {
@@ -35,127 +53,141 @@ export default function OtherNavbar(props: OtherNavbarProps) {
     onDelete,
     onRemove,
     onDeleteAll,
-    setLoginOpen,
-    setSignupOpen,
     handleLogoutClick,
     anchorEl,
     handleCloseLogout,
     handleLogoutRequest,
   } = props;
   const { authMember } = useGlobals();
+  const history = useHistory();
+  const location = useLocation();
+
+  /** a single product sits one level below the products list */
+  const isProductDetail = /^\/products\/[^/]+/.test(location.pathname);
+  const matched = PAGE_TITLES.find((page) =>
+    location.pathname.startsWith(page.path),
+  );
+  const title = isProductDetail
+    ? "Product Detail"
+    : matched
+      ? matched.title
+      : "NextGain";
+
   return (
     <div className="other-navbar">
-      <Container className="navbar-container">
-        <Stack className="menu">
-          <Box>
+      {/* solid bar — kept separate from the banner artwork below it */}
+      <div className="ng-navbar-strip">
+        <Container className="navbar-container">
+          <Stack className="ng-nav">
             <NavLink to="/">
-              <img className="brand-logo" src="/icons/bumarak.svg" />
+              <Box className="ng-logo">
+                <span className="ng-logo-a">NEXT</span>
+                <span className="ng-logo-b">GAIN</span>
+              </Box>
             </NavLink>
-          </Box>
-          <Stack className="links">
-            <Box className={"hover-line"}>
-              <NavLink to="/">Home</NavLink>
-            </Box>
-            <Box className={"hover-line"}>
-              <NavLink to="/products" activeClassName={"underline"}>
+
+            <Stack className="ng-nav-links">
+              <NavLink exact to="/" activeClassName="underline">
+                Home
+              </NavLink>
+              <NavLink to="/products" activeClassName="underline">
                 Products
               </NavLink>
-            </Box>
-            {authMember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/orders" activeClassName={"underline"}>
+              {authMember ? (
+                <NavLink to="/orders" activeClassName="underline">
                   Orders
                 </NavLink>
-              </Box>
-            ) : null}
-            {authMember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/member-page" activeClassName={"underline"}>
+              ) : null}
+              {authMember ? (
+                <NavLink to="/member-page" activeClassName="underline">
                   My Page
                 </NavLink>
-              </Box>
-            ) : null}
-            <Box className={"hover-line"}>
-              <NavLink to="/help" activeClassName={"underline"}>
+              ) : null}
+              <NavLink to="/help" activeClassName="underline">
                 Help
               </NavLink>
-            </Box>
-            <Basket
-              cartItems={cartItems}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              onDelete={onDelete}
-              onDeleteAll={onDeleteAll}
-            />
+            </Stack>
 
-            {!authMember ? (
-              <Box>
+            <Stack className="ng-nav-actions">
+              <IconButton
+                className="ng-nav-icon"
+                aria-label="search products"
+                onClick={() => history.push("/products")}
+              >
+                <SearchIcon fontSize="small" />
+              </IconButton>
+
+              <Basket
+                cartItems={cartItems}
+                onAdd={onAdd}
+                onRemove={onRemove}
+                onDelete={onDelete}
+                onDeleteAll={onDeleteAll}
+              />
+
+              {!authMember ? (
                 <Button
                   variant="contained"
                   className="login-button"
-                  onClick={() => setLoginOpen(true)}
+                  onClick={() => history.push("/login")}
                 >
                   Login
                 </Button>
-              </Box>
-            ) : (
-              <img
-                className="user-avatar"
-                src={
-                  authMember?.memberImage
-                    ? `${serverApi}/${authMember?.memberImage}`
-                    : "/img/myPhoto.jpg"
-                }
-                aria-haspopup={"true"}
-                onClick={handleLogoutClick}
-              />
-            )}
+              ) : (
+                <img
+                  className="user-avatar"
+                  alt={authMember.memberNick}
+                  src={
+                    authMember?.memberImage
+                      ? `${serverApi}/${authMember?.memberImage}`
+                      : "/img/myPhoto.jpg"
+                  }
+                  aria-haspopup={"true"}
+                  onClick={handleLogoutClick}
+                />
+              )}
 
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={Boolean(anchorEl)}
-              onClose={handleCloseLogout}
-              onClick={handleCloseLogout}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              <MenuItem onClick={handleLogoutRequest}>
-                <ListItemIcon>
-                  <Logout fontSize="small" style={{ color: "blue" }} />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
-            </Menu>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                className="ng-account-menu"
+                open={Boolean(anchorEl)}
+                onClose={handleCloseLogout}
+                onClick={handleCloseLogout}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <MenuItem onClick={handleLogoutRequest}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </Stack>
           </Stack>
-        </Stack>
-      </Container>
+        </Container>
+      </div>
+
+      {/* banner artwork band */}
+      <div className="page-hero">
+        <Container>
+          <Box className="page-banner">
+            <h1>{title}</h1>
+            <Box className="crumbs">
+              <NavLink to="/">Home</NavLink>
+              <span className="sep">/</span>
+              {isProductDetail ? (
+                <>
+                  <NavLink to="/products">Products</NavLink>
+                  <span className="sep">/</span>
+                </>
+              ) : null}
+              <span>{title}</span>
+            </Box>
+          </Box>
+        </Container>
+      </div>
     </div>
   );
 }

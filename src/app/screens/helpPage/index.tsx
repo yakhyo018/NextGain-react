@@ -1,3 +1,11 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Terms / FAQ / Contact tabs restyled; the contact tab is now a two-column
+ * layout with a details card next to the form.
+ * ========================================================================== */
+
 import React from "react";
 import { Box, Container, Stack, Tabs } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -6,6 +14,10 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import PhoneIcon from "@mui/icons-material/PhoneOutlined";
+import MailIcon from "@mui/icons-material/MailOutline";
+import PlaceIcon from "@mui/icons-material/PlaceOutlined";
+import ScheduleIcon from "@mui/icons-material/ScheduleOutlined";
 import Button from "@mui/material/Button";
 import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
@@ -17,7 +29,7 @@ export default function HelpPage() {
   const [value, setValue] = React.useState("1");
 
   /** HANDLERS **/
-  
+
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
@@ -31,95 +43,112 @@ export default function HelpPage() {
               <Tabs
                 value={value}
                 onChange={handleChange}
-                aria-label="lab API tabs example"
+                aria-label="help sections"
                 className={"table_list"}
               >
-                <Tab label="TERMS" value={"1"} />
+                <Tab label="Terms" value={"1"} />
                 <Tab label="FAQ" value={"2"} />
-                <Tab label="CONTACT" value={"3"} />
+                <Tab label="Contact" value={"3"} />
               </Tabs>
             </Box>
           </Box>
-          <Stack>
-            <Stack className={"help-main-content"}>
-              <TabPanel value={"1"}>
-                <Stack className={"rules-box"}>
-                  <Box className={"rules-frame"}>
-                    {terms.map((value, number) => {
-                      return <p key={number}>{value}</p>;
-                    })}
-                  </Box>
-                </Stack>
-              </TabPanel>
-              <TabPanel value={"2"}>
-                <Stack className={"accordion-menu"}>
-                  {faq.map((value, number) => {
-                    return (
-                      <Accordion key={number}>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel1a-content"
-                          id="panel1a-header"
-                        >
-                          <Typography>{value.question}</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          <Typography>{value.answer}</Typography>
-                        </AccordionDetails>
-                      </Accordion>
-                    );
-                  })}
-                </Stack>
-              </TabPanel>
-              <TabPanel value={"3"}>
-                <Stack className={"admin-letter-box"}>
-                  <Stack className={"admin-letter-container"}>
-                    <Box className={"admin-letter-frame"}>
-                      <span>Contact us!</span>
-                      <p>Fill out below form to send a message!</p>
-                    </Box>
-                    <form
-                      action={"#"}
-                      method={"POST"}
-                      className={"admin-letter-frame"}
+
+          <Stack className={"help-main-content"}>
+            {/* ---------- terms ---------- */}
+            <TabPanel value={"1"}>
+              <Stack className={"rules-box"}>
+                <Box className={"rules-frame"}>
+                  {terms.map((value, number) => (
+                    <p key={number}>{value}</p>
+                  ))}
+                </Box>
+              </Stack>
+            </TabPanel>
+
+            {/* ---------- faq ---------- */}
+            <TabPanel value={"2"}>
+              <Stack className={"accordion-menu"}>
+                {faq.map((value, number) => (
+                  <Accordion key={number} disableGutters>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls={`faq-${number}-content`}
+                      id={`faq-${number}-header`}
                     >
-                      <div className={"admin-input-box"}>
-                        <label>Your name</label>
-                        <input
-                          type={"text"}
-                          name={"memberNick"}
-                          placeholder={"Type your name here"}
-                        />
-                      </div>
-                      <div className={"admin-input-box"}>
-                        <label>Your email</label>
-                        <input
-                          type={"text"}
-                          name={"memberEmail"}
-                          placeholder={"Type your email here"}
-                        />
-                      </div>
-                      <div className={"admin-input-box"}>
-                        <label>Message</label>
-                        <textarea
-                          name={"memberMsg"}
-                          placeholder={"Your message"}
-                        ></textarea>
-                      </div>
-                      <Box
-                        display={"flex"}
-                        justifyContent={"flex-end"}
-                        sx={{ mt: "30px" }}
-                      >
-                        <Button type={"submit"} variant="contained">
-                          Send
-                        </Button>
-                      </Box>
-                    </form>
-                  </Stack>
-                </Stack>
-              </TabPanel>
-            </Stack>
+                      <Typography>{value.question}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography>{value.answer}</Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                ))}
+              </Stack>
+            </TabPanel>
+
+            {/* ---------- contact ---------- */}
+            <TabPanel value={"3"}>
+              <Box className={"contact-grid"}>
+                <Box className={"contact-card"}>
+                  <h4>Contact us</h4>
+                  <p>We usually reply within one business day.</p>
+                  <Box className={"contact-line"}>
+                    <PhoneIcon />
+                    <div>+998 90 123 45 67</div>
+                  </Box>
+                  <Box className={"contact-line"}>
+                    <MailIcon />
+                    <div>support@nextgain.com</div>
+                  </Box>
+                  <Box className={"contact-line"}>
+                    <PlaceIcon />
+                    <div>125 Fitness St, Tashkent, Uzbekistan</div>
+                  </Box>
+                  <Box className={"contact-line"}>
+                    <ScheduleIcon />
+                    <div>Mon – Sat, 09:00 – 20:00</div>
+                  </Box>
+                </Box>
+
+                <form
+                  action={"#"}
+                  method={"POST"}
+                  className={"admin-letter-frame"}
+                >
+                  <div className={"admin-input-box"}>
+                    <label>Full name</label>
+                    <input
+                      type={"text"}
+                      name={"memberNick"}
+                      placeholder={"Type your name here"}
+                    />
+                  </div>
+                  <div className={"admin-input-box"}>
+                    <label>Email</label>
+                    <input
+                      type={"text"}
+                      name={"memberEmail"}
+                      placeholder={"Type your email here"}
+                    />
+                  </div>
+                  <div className={"admin-input-box"}>
+                    <label>Message</label>
+                    <textarea
+                      name={"memberMsg"}
+                      placeholder={"How can we help you?"}
+                    ></textarea>
+                  </div>
+                  <Box display={"flex"} justifyContent={"flex-end"}>
+                    <Button
+                      type={"submit"}
+                      className="ng-btn ng-btn--primary"
+                      variant="contained"
+                    >
+                      Send Message
+                    </Button>
+                  </Box>
+                </form>
+              </Box>
+            </TabPanel>
           </Stack>
         </TabContext>
       </Container>

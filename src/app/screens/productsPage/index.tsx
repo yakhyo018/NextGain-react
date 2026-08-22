@@ -1,3 +1,10 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * EDITED
+ *
+ * Routing untouched, only a leftover console.log was removed.
+ * ========================================================================== */
+
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import ChosenProduct from "./ChosenProduct";
 import Products from "./Products";
@@ -11,7 +18,6 @@ interface ProductPageProps {
 export default function ProductsPage(props: ProductPageProps) {
   const { onAdd } = props;
   const products = useRouteMatch();
-  console.log("products:", products);
 
   return (
     <div className={"products-page"}>

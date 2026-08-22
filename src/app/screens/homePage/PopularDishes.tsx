@@ -1,18 +1,21 @@
-import React from "react";
-import { Box, Container, Stack } from "@mui/material";
-import Card from "@mui/joy/Card";
-import CardCover from "@mui/joy/CardCover";
-import CardContent from "@mui/joy/CardContent";
-import Typography from "@mui/joy/Typography";
-import { CssVarsProvider } from "@mui/joy/styles";
-import CardOverflow from "@mui/joy/CardOverflow";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * The 'Popular Products' row, rendered with ProductCard. Selector unchanged.
+ *
+ * The order comes from homePage/index.tsx, which asks the backend for
+ * order=productViews; Product.service sorts every field except productPrice
+ * descending, so the most-viewed product lands first.
+ * ========================================================================== */
 
+import { Box, Container, Stack } from "@mui/material";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrievePopularDishes } from "./selector";
-import { serverApi } from "../../../lib/config";
+import ProductCard from "../../components/product/ProductCard";
+import { CartItem } from "../../../lib/types/search";
 
 /** REDUX SLICE & SELECTOR **/
 const popularDishesRetriever = createSelector(
@@ -20,90 +23,34 @@ const popularDishesRetriever = createSelector(
   (popularDishes) => ({ popularDishes }),
 );
 
-export default function PopularDishes() {
+interface PopularDishesProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function PopularDishes(props: PopularDishesProps) {
+  const { onAdd } = props;
   const { popularDishes } = useSelector(popularDishesRetriever);
 
   return (
     <div className="popular-dishes-frame">
       <Container>
         <Stack className="popular-section">
-          <Box className="category-title">Popular Dishes</Box>
+          <Box className="ng-section-head">
+            <span className="ng-section-title">Popular Products</span>
+            <Link to="/products" className="ng-link-all">
+              View All
+            </Link>
+          </Box>
+
           <Stack className="cards-frame">
             {popularDishes.length !== 0 ? (
-              popularDishes.map((product) => {
-                const imagePath = `${serverApi}/${product.productImages[0]}`;
-                return (
-                  <CssVarsProvider key={product._id}>
-                    <Card className={"card"}>
-                      <CardCover>
-                        <img src={imagePath} alt="" />
-                      </CardCover>
-                      <CardCover className={"card-cover"} />
-                      <CardContent sx={{ justifyContent: "flex-end" }}>
-                        <Stack
-                          flexDirection={"row"}
-                          justifyContent={"space-between"}
-                          sx={{ width: "260px" }}
-                        >
-                          <Typography
-                            level="h2"
-                            fontSize="lg"
-                            textColor="#fff"
-                            mb={1}
-                            sx={{
-                              display: "block",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                            }}
-                            noWrap
-                          >
-                            {product.productName}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              fontWeight: "md",
-                              color: "neutral.300",
-                              alignItems: "center",
-                              display: "flex",
-                            }}
-                          >
-                            {product.productViews}
-                            <VisibilityIcon
-                              sx={{ fontSize: 25, marginLeft: "5px" }}
-                            />
-                          </Typography>
-                        </Stack>
-                      </CardContent>
-                      <CardOverflow
-                        sx={{
-                          display: "flex",
-                          gap: 1.5,
-                          py: 1.5,
-                          px: "var(--Card-padding)",
-                          borderTop: "1px solid",
-                          height: "60px",
-                          width: "290px",
-                        }}
-                      >
-                        <Typography
-                          startDecorator={<DescriptionOutlinedIcon />}
-                          textColor="neutral.300"
-                          sx={{
-                            display: "block",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                          }}
-                          noWrap
-                        >
-                          {product.productDesc}
-                        </Typography>
-                      </CardOverflow>
-                    </Card>
-                  </CssVarsProvider>
-                );
-              })
+              popularDishes.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  product={product}
+                  onAdd={onAdd}
+                />
+              ))
             ) : (
               <Box className="no-data">Popular products are not available!</Box>
             )}

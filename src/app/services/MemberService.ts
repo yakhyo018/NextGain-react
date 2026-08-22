@@ -1,3 +1,15 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * EDITED
+ *
+ * BUG FIX -- updateMember returned 500. Two causes, both in this file:
+ *   1. the manual 'Content-Type: multipart/form-data' header dropped the
+ *      boundary, so the server could not parse the body
+ *   2. memberImage was appended as a plain string when no new file was chosen,
+ *      and multer rejects text on a file field
+ * Everything else in this service is untouched.
+ * ========================================================================== */
+
 import axios from "axios";
 import { serverApi } from "../../lib/config";
 import {
@@ -95,15 +107,20 @@ class MemberService {
       formData.append("memberPhone", input.memberPhone || "");
       formData.append("memberAddress", input.memberAddress || "");
       formData.append("memberDesc", input.memberDesc || "");
-      formData.append("memberImage", input.memberImage || "");
+
+      // Only send memberImage when the user actually picked a new file.
+      // When nothing was chosen it is still the old path string, and multer
+      // rejects a text value on a file field.
+      if (input.memberImage instanceof File) {
+        formData.append("memberImage", input.memberImage);
+      }
 
       const result = await axios(`${serverApi}/member/update`, {
         method: "POST",
         data: formData,
         withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        // No manual Content-Type here: the browser has to add the multipart
+        // boundary itself, otherwise the server cannot parse the body.
       });
       console.log("updateMember:", result);
 

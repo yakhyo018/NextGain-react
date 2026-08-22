@@ -1,39 +1,78 @@
-.App {
-  text-align: center;
-}
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * App shell (sticky footer) and the global MUI overrides for tabs,
+ * pagination and accordions.
+ * ========================================================================== */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* app shell — keeps every route on the same warm background and makes sure
+   the footer sits at the bottom on short pages */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
-}
-
-.App-header {
-  min-height: 100vh;
+#root {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100vh;
+  background: var(--ng-bg);
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+#root > .MuiSwitch-root,
+.ng-route {
+  flex: 1;
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.homepage,
+.products-page,
+.order-page,
+.help-page,
+.user-page,
+.auth-page {
+  flex: 1;
+  background: var(--ng-bg);
+}
+
+/* MUI overrides that apply everywhere */
+
+.MuiContainer-root {
+  width: 100%;
+}
+
+.MuiTabs-root .MuiTabs-indicator {
+  background-color: var(--ng-green);
+  height: 2px;
+}
+
+.MuiTab-root {
+  text-transform: none !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: var(--ng-text-muted) !important;
+  min-height: 46px !important;
+}
+
+.MuiTab-root.Mui-selected {
+  color: var(--ng-green) !important;
+}
+
+.MuiPaginationItem-root {
+  border-radius: var(--ng-r-sm) !important;
+  font-weight: 600 !important;
+  color: var(--ng-text-muted) !important;
+}
+
+.MuiPaginationItem-root.Mui-selected {
+  background: var(--ng-green) !important;
+  color: #fff !important;
+}
+
+.MuiAccordion-root {
+  box-shadow: none !important;
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-r) !important;
+  background: var(--ng-surface) !important;
+}
+
+.MuiAccordion-root::before {
+  display: none;
 }

@@ -1,337 +1,202 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * My Page: profile card and the settings form.
+ * ========================================================================== */
+
+/* ==========================================================================
+   My page
+   ========================================================================== */
+
 .user-page {
-	width: 100%;
-	height: auto;
-	display: flex;
-	background: #f8f8ff;
-}
-
-.user-page .css-heg063-MuiTabs-flexContainer {
-	flex-direction: column;
-}
-
-.user-page .css-mn3ro6-MuiTabs-indicator {
-	height: 0px;
-	width: 0px;
-}
-
-.user-page .css-1ujnqem-MuiTabs-root {
-	width: 100%;
+  padding: 40px 0 90px;
 }
 
 .user-page .my-page-frame {
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: row;
-	padding: 50px 0 50px 0;
+  display: grid;
+  grid-template-columns: 292px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
 }
 
-.my-page-frame .my-page-left {
-	width: 70%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.my-page-left .menu-name {
-	width: 100%;
-	height: 70px;
-	display: flex;
-	justify-content: center;
-	border-bottom: 1px solid #f8f8ff;
-	font-family: 'Poppins';
-	font-style: normal;
-	font-weight: 600;
-	font-size: 45px;
-	color: #f8f8ff;
-}
-
-.my-page-left .menu-content {
-	margin-top: 10px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.my-page-left .write-content {
-	margin-top: 10px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.user-page .menu-content .post-content {
-	margin-top: 10px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.my-page-frame .my-page-right {
-	margin-left: 30px;
-	width: 30%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
+/* ---------- profile card ---------- */
 
 .user-page .order-info-box {
-	position: relative;
-	padding: 20px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background: #f6f2ff;
-	box-shadow: 15px 14px 4px rgba(0, 0, 0, 0.25), inset -1px 0px 16px 13px rgb(24 23 112 / 20%);
-	border-radius: 16px;
+  background: var(--ng-surface);
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-r);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.user-page .order-info-box .settings-btn {
-	position: absolute;
-	top: 6%;
-	right: 19%;
-	cursor: pointer;
+.user-page .order-user-img {
+  position: relative;
 }
 
-.user-page .order-info-box .order-user-img {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+.user-page .order-user-avatar {
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--ng-surface);
+  box-shadow: 0 0 0 1px var(--ng-border);
+  background: var(--ng-surface-alt);
 }
 
-.user-page .order-info-box .order-user-img .order-user-avatar {
-	width: 150px;
-	height: 150px;
-	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-	border-radius: 37px;
+.user-page .order-user-icon-box {
+  position: absolute;
+  right: -2px;
+  bottom: 2px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--ng-green);
+  color: #fff;
+  border: 2px solid var(--ng-surface);
 }
 
-.user-page .order-info-box .order-user-icon-box {
-	position: absolute;
-	padding: 5px;
-	width: 37px;
-	height: 37px;
-	top: 81%;
-	right: 0;
-	display: flex;
-	background: rgb(209 209 209 / 33%);
-	border-radius: 37px;
+.user-page .order-user-icon-box svg {
+  font-size: 15px;
 }
 
-.user-page .order-info-box .order-user-name {
-	margin-top: 10px;
-	font-family: 'Commissioner';
-	font-style: normal;
-	font-weight: 500;
-	font-size: 28px;
-	line-height: 36px;
-	color: #08090d;
+.user-page .order-user-name {
+  margin-top: 14px;
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ng-text);
 }
 
-.user-page .order-info-box .order-user-prof {
-	font-family: 'Commissioner';
-	font-style: normal;
-	font-weight: 500;
-	font-size: 20px;
-	line-height: 36px;
-	color: #a1a1a1;
+.user-page .order-user-prof {
+  margin-top: 4px;
+  font-size: 11.5px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--ng-text-faint);
 }
 
-.user-page .order-info-box .user-media-box {
-	margin-top: 10px;
-	width: 60%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+.user-page .order-user-address {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--ng-text-muted);
+  text-align: center;
 }
 
-.user-page .order-info-box .user-desc {
-	margin-top: 30px;
-	width: 90%;
-	display: flex;
-	justify-content: center;
-	font-family: 'DM Sans';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 24px;
-	color: #616164;
+.user-page .user-media-box {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 20px 0 4px;
 }
 
-.user-page .order-info-box .css-1e3kzd4-MuiButtonBase-root-MuiButton-root {
-	margin-top: 15px;
-	min-width: 90%;
-	height: 44px;
-	text-transform: capitalize;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 25px;
-	line-height: 38px;
-	color: #f8f8ff;
+.user-page .user-media-box a,
+.user-page .user-media-box svg {
+  color: var(--ng-text-faint);
+  font-size: 19px;
+  cursor: pointer;
+  transition: color 0.15s ease;
 }
 
-.user-page .menu-box img {
-	width: 25px;
+.user-page .user-media-box svg:hover {
+  color: var(--ng-green);
 }
 
-.user-page .menu-box span {
-	margin-left: 30px;
-	font-family: 'Poppins';
-	font-style: normal;
-	font-weight: 600;
-	font-size: 25px;
-	line-height: 38px;
-	color: #000000;
+.user-page .user-desc {
+  margin: 16px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--ng-border);
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--ng-text-muted);
+  text-align: center;
+}
+
+/* ---------- settings ---------- */
+
+.user-page .my-page-right {
+  background: var(--ng-surface);
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-r);
+  padding: 26px 28px;
+}
+
+.user-page .menu-name {
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--ng-text);
+  padding-bottom: 16px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--ng-border);
 }
 
 .user-page .settings {
-	width: 95%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.user-page .settings .input-frame {
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+.user-page .member-media-frame {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+  border: 1px dashed var(--ng-border-strong);
+  border-radius: var(--ng-r);
+  background: var(--ng-surface-alt);
 }
 
-.user-page .settings .short-input {
-	width: 49%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
+.user-page .mb-image {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--ng-surface);
+  border: 1px solid var(--ng-border);
 }
 
-.user-page .settings .long-input {
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-.user-page .settings .spec-label {
-	font-family: 'Source Serif Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 25px;
-	color: #f8f8ff;
+.user-page .media-change-box span {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ng-text);
 }
 
-.user-page .settings .spec-input {
-	position: relative;
-	margin-top: 10px;
-	padding-left: 20px;
-	width: 100%;
-	height: 54px;
-	border: none;
-	background: #f7f7f7;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 5px;
-	font-family: 'GT Walsheim Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 15px;
-	line-height: 26px;
-	color: #4f547b;
+.user-page .media-change-box p {
+  margin: 2px 0 8px;
+  font-size: 12px;
+  color: var(--ng-text-faint);
 }
 
-.user-page .settings .spec-textarea {
-	position: relative;
-	margin-top: 10px;
-	padding: 20px;
-	width: 100%;
-	height: 200px;
-	border: none;
-	background: #f7f7f7;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 5px;
-	font-family: 'GT Walsheim Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 15px;
-	line-height: 26px;
-	color: #4f547b;
+.user-page .input-frame {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 
-.user-page .settings .member-media-frame {
-	margin-top: 25px;
-	position: relative;
-	padding: 10px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	border-radius: 5px;
+.user-page .input-frame.single {
+  grid-template-columns: 1fr;
 }
 
-.user-page .settings .member-media-frame .mb-image {
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
+.user-page .save-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid var(--ng-border);
 }
 
-.user-page .settings .media_change-box {
-	position: relative;
-	margin-left: 20px;
-	width: auto;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-}
-
-.user-page .settings .media-change-box span {
-	font-family: 'GT Walsheim Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 18px;
-	color: #140342;
-}
-
-.user-page .settings .media-change-box p {
-	margin: 10px 0px 14px 0px;
-	font-family: 'GT Walsheim Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 16px;
-	color: #4f547b;
-}
-
-.user-page .settings .up-del-box {
-	position: relative;
-	width: 37px;
-	height: 37px;
-	display: flex;
-	background: #cbcbcb;
-	border-radius: 8px;
-	justify-content: center;
-	align-items: center;
-}
-
-.user-page .settings .up-del-box input {
-	position: absolute;
-	width: 20px;
-	height: 16px;
-	padding: 0;
-	background: red;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	border: 0;
-}
-
-.user-page .settings .save-box {
-	display: flex;
-	justify-content: flex-end;
-	margin-top: 25px;
+@media (max-width: 900px) {
+  .user-page .my-page-frame,
+  .user-page .input-frame {
+    grid-template-columns: 1fr;
+  }
 }

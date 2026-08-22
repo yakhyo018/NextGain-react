@@ -1,9 +1,21 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * EDITED
+ *
+ * Presentation wiring only, the handlers are unchanged:
+ *   - /login and /register routes added, the auth modal removed
+ *   - HomePage now receives onAdd so home cards can fill the cart
+ *   - the cart is emptied on logout
+ * ========================================================================== */
+
 import { useState } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import HomePage from "./screens/homePage";
 import ProductsPage from "./screens/productsPage";
 import OrdersPage from "./screens/ordersPage";
 import UserPage from "./screens/userPage";
+import LoginPage from "./screens/authPage/Login";
+import RegisterPage from "./screens/authPage/Register";
 import HomeNavbar from "./components/headers/HomeNavbar";
 import OtherNavbar from "./components/headers/OtherNavbar";
 import Footer from "./components/footer";
@@ -12,7 +24,6 @@ import "../css/app.css";
 import "../css/navbar.css";
 import "../css/footer.css";
 import useBasket from "./hooks/useBasket";
-import AuthenticationModal from "./components/auth";
 import { sweetErrorHandling, sweetTopSuccessAlert } from "../lib/sweetAlert";
 import { Messages } from "../lib/config";
 import MemberService from "./services/MemberService";
@@ -22,14 +33,9 @@ function App() {
   const location = useLocation();
   const { setAuthMember } = useGlobals();
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
-  const [signupOpen, setSignupOpen] = useState<boolean>(false);
-  const [loginOpen, setLoginOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   /** HANDLERS **/
-  const handleSignupClose = () => setSignupOpen(false);
-  const handleLoginClose = () => setLoginOpen(false);
-
   const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
   };
@@ -41,43 +47,34 @@ function App() {
 
       await sweetTopSuccessAlert("Success", 700);
       setAuthMember(null);
+      // the cart belongs to the member, so it leaves with them
+      onDeleteAll();
     } catch (err) {
       console.log(err);
       sweetErrorHandling(Messages.error1);
     }
   };
 
+  const navProps = {
+    cartItems,
+    onAdd,
+    onRemove,
+    onDelete,
+    onDeleteAll,
+    anchorEl,
+    handleLogoutClick,
+    handleCloseLogout,
+    handleLogoutRequest,
+  };
+
   return (
     <>
       {location.pathname === "/" ? (
-        <HomeNavbar
-          cartItems={cartItems}
-          onAdd={onAdd}
-          onRemove={onRemove}
-          onDelete={onDelete}
-          onDeleteAll={onDeleteAll}
-          setSignupOpen={setSignupOpen}
-          setLoginOpen={setLoginOpen}
-          anchorEl={anchorEl}
-          handleLogoutClick={handleLogoutClick}
-          handleCloseLogout={handleCloseLogout}
-          handleLogoutRequest={handleLogoutRequest}
-        />
+        <HomeNavbar {...navProps} />
       ) : (
-        <OtherNavbar
-          cartItems={cartItems}
-          onAdd={onAdd}
-          onRemove={onRemove}
-          onDelete={onDelete}
-          onDeleteAll={onDeleteAll}
-          setSignupOpen={setSignupOpen}
-          setLoginOpen={setLoginOpen}
-          anchorEl={anchorEl}
-          handleLogoutClick={handleLogoutClick}
-          handleCloseLogout={handleCloseLogout}
-          handleLogoutRequest={handleLogoutRequest}
-        />
+        <OtherNavbar {...navProps} />
       )}
+
       <Switch>
         <Route path="/products">
           <ProductsPage onAdd={onAdd} />
@@ -91,18 +88,18 @@ function App() {
         <Route path="/help">
           <HelpPage />
         </Route>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/register">
+          <RegisterPage />
+        </Route>
         <Route path="/">
-          <HomePage />
+          <HomePage onAdd={onAdd} />
         </Route>
       </Switch>
-      <Footer />
 
-      <AuthenticationModal
-        signupOpen={signupOpen}
-        loginOpen={loginOpen}
-        handleLoginClose={handleLoginClose}
-        handleSignupClose={handleSignupClose}
-      />
+      <Footer />
     </>
   );
 }

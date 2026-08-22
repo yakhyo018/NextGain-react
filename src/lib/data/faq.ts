@@ -1,26 +1,39 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Restaurant questions replaced with supplement-store ones.
+ * ========================================================================== */
+
 export const faq = [
-	{
-		question: 'How to make order?',
-		answer: 'You should choose products and make an order via basket!',
-	},
-	{
-		question: 'How long does delivery takes?',
-		answer: 'It depends on your location. The max delivery time is 1 hour!',
-	},
-	{
-		question: 'Is our details secure in this platform?',
-		answer: 'Of course, we take full responsibility for your provided user details!',
-	},
-	{
-		question: 'I am blocked, what should I do?',
-		answer: 'There is a reason for your block, please contact to us!',
-	},
-	{
-		question: 'How can I cancel order?',
-		answer: 'You can cancel your order any time easily, just go to your orders page!',
-	},
-	{
-		question: 'Who developed this platform?',
-		answer: 'ITC Global developers developed this platform!',
-	},
+  {
+    question: "What is NextGain Store?",
+    answer:
+      "NextGain is an online supplement store — protein, creatine, mass gainers, pre-workout and accessories from brands athletes actually train on.",
+  },
+  {
+    question: "How can I track my order?",
+    answer:
+      "Open the Orders page from the navigation bar. Every order moves through Paused, Processing and Finished, so you always see where it stands.",
+  },
+  {
+    question: "What payment methods do you accept?",
+    answer:
+      "Visa, Mastercard and PayPal are accepted at checkout. Your card details are never stored on our servers.",
+  },
+  {
+    question: "Can I return a product?",
+    answer:
+      "Unopened products can be returned within 14 days of delivery. Contact us from the form on this page and we will arrange the pickup.",
+  },
+  {
+    question: "How long does shipping take?",
+    answer:
+      "Orders inside Uzbekistan arrive within 48 hours. Shipping is free on every order above $100.",
+  },
+  {
+    question: "Are the products authentic?",
+    answer:
+      "Every item is sourced directly from the brand or its official distributor, and each batch is checked before it reaches the warehouse.",
+  },
 ];

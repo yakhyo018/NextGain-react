@@ -1,94 +1,151 @@
-.foot-desc-txt {
-  margin-top: 22px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 34px;
-  color: #e3c08d;
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Dark footer: brand column, four link columns, bottom bar.
+ * ========================================================================== */
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.ng-footer {
+  width: 100%;
+  background: var(--ng-dark);
+  color: var(--ng-on-dark);
+  padding: 62px 0 26px;
 }
 
-.sns-context {
-  margin-top: 17px;
-  width: 137px;
+.ng-footer .foot-top {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 48px;
 }
 
-.foot-category-title {
-  width: 106px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 34px;
-  color: #c5c8c9;
-}
-
-.foot-category-link {
-  margin-top: 20px;
-  height: 170px;
+.ng-footer .foot-brand {
+  width: 260px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 170px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 34px;
 }
 
-.foot-category-link a {
-  color: #e3c08d;
-  text-decoration: none;
-  cursor: pointer;
+.ng-footer .foot-desc-txt {
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ng-on-dark-muted);
 }
 
-.find-us {
+.ng-footer .sns-context {
   display: flex;
   flex-direction: row;
+  gap: 10px;
+  margin-top: 22px;
 }
 
-.find-us span {
-  font-family: "Poppins";
-  font-style: normal;
+.ng-footer .sns-context a {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--ng-border-dark);
+  color: var(--ng-on-dark-muted);
+  transition: all 0.15s ease;
+}
+
+.ng-footer .sns-context a:hover {
+  border-color: var(--ng-green-soft);
+  color: var(--ng-green-soft);
+}
+
+.ng-footer .foot-columns {
+  display: flex;
+  flex-direction: row;
+  gap: 56px;
+}
+
+.ng-footer .foot-category-title {
+  font-size: 12px;
   font-weight: 700;
-  font-size: 18px;
-  line-height: 34px;
-  color: #c5c8c9;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ng-on-dark);
+  margin-bottom: 16px;
 }
 
-.find-us div {
-  margin-left: 10px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
+.ng-footer .foot-category-link {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ng-footer .foot-category-link a {
+  font-size: 13px;
+  color: var(--ng-on-dark-muted);
+  transition: color 0.15s ease;
+}
+
+.ng-footer .foot-category-link a:hover {
+  color: var(--ng-green-soft);
+}
+
+.ng-footer .find-us {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ng-on-dark-muted);
+  max-width: 220px;
+}
+
+.ng-footer .find-us svg {
   font-size: 16px;
-  line-height: 34px;
-  color: #e3c08d;
+  margin-top: 2px;
+  color: var(--ng-green-soft);
+  flex-shrink: 0;
 }
 
-.copyright-txt {
-  margin-top: 17px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 34px;
-  color: #e3c08d;
+.ng-footer .foot-divider {
+  height: 1px;
+  width: 100%;
+  margin: 44px 0 20px;
+  background: var(--ng-border-dark);
 }
 
-.foot-category-title:after {
-  display: block;
-  content: "";
-  border-bottom: solid 2px #d7b686;
-  transform: scaleX(0);
-  transition: transform 250ms ease-in-out;
-  transform-origin: 0% 50%;
+.ng-footer .copyright-txt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--ng-text-faint);
 }
 
-.foot-category-title:hover:after {
-  transform: scaleX(1);
+.ng-footer .payment-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.ng-footer .payment-icons img {
+  height: 22px;
+  opacity: 0.75;
+}
+
+@media (max-width: 900px) {
+  .ng-footer .foot-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .ng-footer .foot-columns {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
 }

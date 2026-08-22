@@ -1,13 +1,467 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Design tokens live here: the :root custom properties (colours, radii,
+ * shadows, spacing) plus the shared primitives every page reuses --
+ * .ng-card, .ng-chip, .ng-pill, .ng-btn, .ng-input, .ng-logo.
+ * Change a colour here and the whole site follows.
+ * ========================================================================== */
+
+/* ==========================================================================
+   NextGain — design tokens & base layer
+   Everything below is presentation only. Colours, spacing, radii and the
+   shared primitives (buttons, cards, chips, pills) live here so the page
+   stylesheets stay thin.
+   ========================================================================== */
+
+:root {
+  /* surfaces */
+  --ng-bg: #f2f2ee;
+  --ng-surface: #ffffff;
+  --ng-surface-alt: #fafaf7;
+  --ng-dark: #101010;
+  --ng-dark-2: #1a1a1a;
+  --ng-dark-3: #262626;
+
+  /* brand */
+  --ng-green: #3b6e4f;
+  --ng-green-dark: #2f5a40;
+  --ng-green-light: #eaf1ec;
+  --ng-green-soft: #6fae7c;
+
+  /* text */
+  --ng-text: #14140f;
+  --ng-text-muted: #6e6e68;
+  --ng-text-faint: #9b9b95;
+  --ng-on-dark: #ffffff;
+  --ng-on-dark-muted: #b5b5ae;
+
+  /* feedback */
+  --ng-red: #d94a3d;
+  --ng-amber: #f5a623;
+  --ng-blue: #3b6ea5;
+
+  /* lines */
+  --ng-border: #e4e3de;
+  --ng-border-strong: #d3d2cc;
+  --ng-border-dark: #2c2c2c;
+
+  /* shape */
+  --ng-r-sm: 6px;
+  --ng-r: 10px;
+  --ng-r-lg: 14px;
+  --ng-r-pill: 999px;
+
+  /* elevation */
+  --ng-shadow-sm: 0 1px 2px rgba(20, 20, 15, 0.05);
+  --ng-shadow: 0 2px 10px rgba(20, 20, 15, 0.06);
+  --ng-shadow-lg: 0 12px 32px rgba(20, 20, 15, 0.12);
+
+  /* rhythm */
+  --ng-gap: 20px;
+  --ng-section-y: 72px;
+  --ng-nav-h: 68px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background: var(--ng-bg);
+  color: var(--ng-text);
+  font-family: "Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ---------- shared type scale ---------- */
+
+.ng-section {
+  padding: var(--ng-section-y) 0;
+}
+
+.ng-section-head {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.ng-section-title,
+.category-title {
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--ng-text);
+}
+
+.ng-link-all {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ng-text-muted);
+  transition: color 0.15s ease;
+}
+
+.ng-link-all:hover {
+  color: var(--ng-green);
+}
+
+.no-data {
+  width: 100%;
+  padding: 48px 0;
+  text-align: center;
+  color: var(--ng-text-faint);
+  font-size: 14px;
+}
+
+/* ---------- product card (used on home + products grid) ---------- */
+
+.ng-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--ng-surface);
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-r);
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.ng-card:hover {
+  border-color: var(--ng-border-strong);
+  box-shadow: var(--ng-shadow);
+  transform: translateY(-2px);
+}
+
+.ng-card .ng-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--ng-surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ng-card .ng-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ng-card .ng-card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 3px 9px;
+  border-radius: var(--ng-r-pill);
+  background: rgba(16, 16, 16, 0.82);
+  color: var(--ng-on-dark);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.ng-card .ng-card-fav {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ng-text-muted);
+  border: 1px solid var(--ng-border);
+}
+
+.ng-card .ng-card-fav:hover {
+  background: #fff;
+  color: var(--ng-green);
+}
+
+.ng-card .ng-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px 14px;
+}
+
+.ng-card .ng-card-kicker {
+  font-size: 11px;
+  color: var(--ng-text-faint);
+  letter-spacing: 0.4px;
+  text-transform: capitalize;
+}
+
+.ng-card .ng-card-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ng-text);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 36px;
+}
+
+.ng-card .ng-card-foot {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.ng-card .ng-card-price {
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ng-text);
+}
+
+.ng-card .ng-card-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ng-text-muted);
+}
+
+.ng-card .ng-card-cart {
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: var(--ng-r-sm);
+  background: var(--ng-green);
+  color: #fff;
+}
+
+.ng-card .ng-card-cart:hover {
+  background: var(--ng-green-dark);
+}
+
+/* ---------- small primitives ---------- */
+
+.ng-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: var(--ng-r-pill);
+  border: 1px solid var(--ng-border);
+  background: var(--ng-surface);
+  color: var(--ng-text-muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ng-chip:hover {
+  border-color: var(--ng-green);
+  color: var(--ng-green);
+}
+
+.ng-chip.is-active {
+  background: var(--ng-green);
+  border-color: var(--ng-green);
+  color: #fff;
+}
+
+.ng-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: var(--ng-r-pill);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.ng-pill--green {
+  background: var(--ng-green-light);
+  color: var(--ng-green-dark);
+}
+
+.ng-pill--amber {
+  background: #fdf1dc;
+  color: #9a6410;
+}
+
+.ng-pill--blue {
+  background: #e6eef7;
+  color: #2f5880;
+}
+
+.ng-pill--grey {
+  background: #eeeeea;
+  color: var(--ng-text-muted);
+}
+
+/* buttons — these ride on top of MUI's own class */
+.ng-btn.MuiButton-root {
+  border-radius: var(--ng-r-sm);
+  text-transform: none;
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: 0.1px;
+  box-shadow: none;
+  padding: 9px 22px;
+}
+
+.ng-btn--primary.MuiButton-root {
+  background: var(--ng-green);
+  color: #fff;
+}
+
+.ng-btn--primary.MuiButton-root:hover {
+  background: var(--ng-green-dark);
+  box-shadow: none;
+}
+
+.ng-btn--ghost.MuiButton-root {
+  background: transparent;
+  color: var(--ng-text);
+  border: 1px solid var(--ng-border-strong);
+}
+
+.ng-btn--ghost.MuiButton-root:hover {
+  background: var(--ng-surface-alt);
+  border-color: var(--ng-text-muted);
+}
+
+.ng-btn--danger.MuiButton-root {
+  background: transparent;
+  color: var(--ng-red);
+  border: 1px solid #f0cbc6;
+}
+
+.ng-btn--danger.MuiButton-root:hover {
+  background: #fdf1ef;
+  border-color: var(--ng-red);
+}
+
+/* form controls */
+.ng-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ng-field label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ng-text);
+}
+
+.ng-input,
+.ng-textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-r-sm);
+  background: var(--ng-surface);
+  color: var(--ng-text);
+  font-family: inherit;
+  font-size: 13.5px;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.ng-input::placeholder,
+.ng-textarea::placeholder {
+  color: var(--ng-text-faint);
+}
+
+.ng-input:focus,
+.ng-textarea:focus {
+  border-color: var(--ng-green);
+  box-shadow: 0 0 0 3px rgba(59, 110, 79, 0.12);
+}
+
+.ng-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* logo wordmark — replaces the missing svg asset */
+.ng-logo {
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ng-logo .ng-logo-a {
+  color: var(--ng-on-dark);
+}
+
+.ng-logo .ng-logo-b {
+  color: var(--ng-green-soft);
+}
+
+.ng-logo--dark .ng-logo-a {
+  color: var(--ng-text);
+}
+
+.ng-logo--dark .ng-logo-b {
+  color: var(--ng-green);
+}
+
+/* scrollbars inside panels */
+.ng-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.ng-scroll::-webkit-scrollbar-thumb {
+  background: var(--ng-border-strong);
+  border-radius: var(--ng-r-pill);
+}
+
+.ng-scroll::-webkit-scrollbar-track {
+  background: transparent;
 }

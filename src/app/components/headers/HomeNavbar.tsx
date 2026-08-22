@@ -1,17 +1,30 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Markup only. The bar is now its own solid strip with the links centred,
+ * and the hero artwork sits in a separate band below it. The logo is a text
+ * wordmark because /icons/nextgain.svg does not exist in public/.
+ * Login / Sign Up navigate to the new auth pages instead of opening a modal.
+ * ========================================================================== */
+
 import {
   Box,
   Button,
   Container,
+  IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
   Stack,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import BoltIcon from "@mui/icons-material/Bolt";
+import { Logout } from "@mui/icons-material";
 import Basket from "./Basket";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
-import { Logout } from "@mui/icons-material";
 import { serverApi } from "../../../lib/config";
 
 interface HomeNavbarProps {
@@ -20,8 +33,6 @@ interface HomeNavbarProps {
   onDelete: (item: CartItem) => void;
   onRemove: (item: CartItem) => void;
   onDeleteAll: () => void;
-  setSignupOpen: (isOpen: boolean) => void;
-  setLoginOpen: (isOpen: boolean) => void;
   handleLogoutClick: (e: React.MouseEvent<HTMLElement>) => void;
   anchorEl: HTMLElement | null;
   handleCloseLogout: () => void;
@@ -35,154 +46,141 @@ export default function HomeNavbar(props: HomeNavbarProps) {
     onDelete,
     onRemove,
     onDeleteAll,
-    setLoginOpen,
-    setSignupOpen,
     handleLogoutClick,
     anchorEl,
     handleCloseLogout,
     handleLogoutRequest,
   } = props;
   const { authMember } = useGlobals();
-  /** Handlers */
+  const history = useHistory();
 
   return (
     <div className="home-navbar">
-      <Container className="navbar-container">
-        <Stack className="menu">
-          <Box>
+      {/* solid bar — kept separate from the hero artwork below it */}
+      <div className="ng-navbar-strip">
+        <Container className="navbar-container">
+          <Stack className="ng-nav">
             <NavLink to="/">
-              <img className="brand-logo" src="/icons/burak.svg" />
+              <Box className="ng-logo">
+                <span className="ng-logo-a">NEXT</span>
+                <span className="ng-logo-b">GAIN</span>
+              </Box>
             </NavLink>
-          </Box>
-          <Stack className="links">
-            <Box className={"hover-line"}>
-              <NavLink to="/" activeClassName={"underline"}>
+
+            <Stack className="ng-nav-links">
+              <NavLink exact to="/" activeClassName="underline">
                 Home
               </NavLink>
-            </Box>
-            <Box className={"hover-line"}>
-              <NavLink to="/products" activeClassName={"underline"}>
+              <NavLink to="/products" activeClassName="underline">
                 Products
               </NavLink>
-            </Box>
-            {authMember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/orders" activeClassName={"underline"}>
+              {authMember ? (
+                <NavLink to="/orders" activeClassName="underline">
                   Orders
                 </NavLink>
-              </Box>
-            ) : null}
-            {authMember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/member-page" activeClassName={"underline"}>
+              ) : null}
+              {authMember ? (
+                <NavLink to="/member-page" activeClassName="underline">
                   My Page
                 </NavLink>
-              </Box>
-            ) : null}
-            <Box className={"hover-line"}>
-              <NavLink to="/help" activeClassName={"underline"}>
+              ) : null}
+              <NavLink to="/help" activeClassName="underline">
                 Help
               </NavLink>
-            </Box>
-            <Basket
-              cartItems={cartItems}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              onDelete={onDelete}
-              onDeleteAll={onDeleteAll}
-            />
+            </Stack>
 
-            {!authMember ? (
-              <Box>
+            <Stack className="ng-nav-actions">
+              <IconButton
+                className="ng-nav-icon"
+                aria-label="search products"
+                onClick={() => history.push("/products")}
+              >
+                <SearchIcon fontSize="small" />
+              </IconButton>
+
+              <Basket
+                cartItems={cartItems}
+                onAdd={onAdd}
+                onRemove={onRemove}
+                onDelete={onDelete}
+                onDeleteAll={onDeleteAll}
+              />
+
+              {!authMember ? (
                 <Button
                   variant="contained"
                   className="login-button"
-                  onClick={() => setLoginOpen(true)}
+                  onClick={() => history.push("/login")}
                 >
                   Login
                 </Button>
-              </Box>
-            ) : (
-              <img
-                className="user-avatar"
-                src={
-                  authMember?.memberImage
-                    ? `${serverApi}/${authMember?.memberImage}`
-                    : "/img/myPhoto.jpg"
-                }
-                aria-haspopup={"true"}
-                onClick={handleLogoutClick}
-              />
-            )}
+              ) : (
+                <img
+                  className="user-avatar"
+                  alt={authMember.memberNick}
+                  src={
+                    authMember?.memberImage
+                      ? `${serverApi}/${authMember?.memberImage}`
+                      : "/img/myPhoto.jpg"
+                  }
+                  aria-haspopup={"true"}
+                  onClick={handleLogoutClick}
+                />
+              )}
 
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={Boolean(anchorEl)}
-              onClose={handleCloseLogout}
-              onClick={handleCloseLogout}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              <MenuItem onClick={handleLogoutRequest}>
-                <ListItemIcon>
-                  <Logout fontSize="small" style={{ color: "blue" }} />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
-            </Menu>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                className="ng-account-menu"
+                open={Boolean(anchorEl)}
+                onClose={handleCloseLogout}
+                onClick={handleCloseLogout}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <MenuItem onClick={handleLogoutRequest}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </Stack>
           </Stack>
-        </Stack>
-        <Stack className={"header-frame"}>
-          <Stack className={"detail"}>
-            <Box className={"head-main-txt"}>
-              World's Most Delicious Cousine
+        </Container>
+      </div>
+
+      {/* hero artwork band */}
+      <div className="home-hero">
+        <Container>
+          <Stack className="header-frame">
+            <Box className="head-main-txt">
+              Fuel your
+              <br />
+              best <em>performance</em>
             </Box>
-            <Box className={"wel-txt"}>The Choice, not just a choice</Box>
-            <Box className={"service-txt"}> 24 hours service</Box>
-            <Box className={"signup"}>
-              {!authMember ? (
-                <Button
-                  variant={"contained"}
-                  className={"signup-button"}
-                  onClick={() => setSignupOpen(true)}
-                >
-                  SIGN UP
-                </Button>
-              ) : null}
+            <Box className="wel-txt">
+              Premium supplements for strength, recovery and results — sourced
+              from the brands athletes actually train on.
+            </Box>
+            <Box className="service-txt">
+              <BoltIcon sx={{ fontSize: 15 }} />
+              24 hours service
+            </Box>
+            <Box className="signup">
+              <Button
+                variant="contained"
+                className="signup-button"
+                onClick={() =>
+                  history.push(authMember ? "/products" : "/register")
+                }
+              >
+                {authMember ? "Shop Now" : "Sign Up"}
+              </Button>
             </Box>
           </Stack>
-          <Box className={"logo-frame"}>
-            <div className={"logo-img"}></div>
-          </Box>
-        </Stack>
-      </Container>
+        </Container>
+      </div>
     </div>
   );
 }

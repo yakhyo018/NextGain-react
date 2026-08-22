@@ -1,0 +1,146 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * NEW FILE
+ *
+ * Split-screen card shared by the login and register pages.
+ * ========================================================================== */
+
+/* ==========================================================================
+   Login / Register
+   ========================================================================== */
+
+.auth-page {
+  padding: 40px 0 90px;
+}
+
+.auth-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 480px;
+  max-width: 980px;
+  margin: 0 auto;
+  background: var(--ng-surface);
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-r-lg);
+  box-shadow: var(--ng-shadow);
+  overflow: hidden;
+}
+
+.auth-card .auth-visual {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  color: var(--ng-on-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 34px;
+}
+
+.auth-card .auth-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.25) 0%,
+    rgba(10, 10, 10, 0.85) 100%
+  );
+}
+
+.auth-card .auth-visual > * {
+  position: relative;
+  z-index: 2;
+}
+
+.auth-card .auth-visual .visual-title {
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+}
+
+.auth-card .auth-visual .visual-sub {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ng-on-dark-muted);
+  max-width: 300px;
+}
+
+.auth-card .auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px 46px;
+}
+
+.auth-card .auth-form h2 {
+  margin: 0;
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: var(--ng-text);
+}
+
+.auth-card .auth-form .auth-lead {
+  margin: 6px 0 26px;
+  font-size: 13px;
+  color: var(--ng-text-muted);
+}
+
+.auth-card .auth-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-card .auth-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: var(--ng-text-muted);
+}
+
+.auth-card .auth-row a {
+  font-weight: 600;
+  color: var(--ng-green);
+}
+
+.auth-card .auth-submit.MuiButton-root {
+  margin-top: 22px;
+  height: 44px;
+  width: 100%;
+}
+
+.auth-card .auth-foot {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ng-text-muted);
+}
+
+.auth-card .auth-foot a {
+  font-weight: 600;
+  color: var(--ng-green);
+}
+
+@media (max-width: 860px) {
+  .auth-card {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-card .auth-visual {
+    min-height: 180px;
+  }
+
+  .auth-card .auth-form {
+    padding: 32px 24px;
+  }
+}

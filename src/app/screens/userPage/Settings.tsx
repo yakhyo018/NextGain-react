@@ -1,5 +1,12 @@
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Markup only -- the handlers, validation and MemberService call are unchanged.
+ * ========================================================================== */
+
 import { Box } from "@mui/material";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import Button from "@mui/material/Button";
 import { useGlobals } from "../../hooks/useGlobals";
 import { useState } from "react";
@@ -67,7 +74,6 @@ export function Settings() {
 
       const member = new MemberService();
       const result = await member.updateMember(memberUpdateInput);
-      console.log("NEW MEMBER:", result);
       setAuthMember(result);
 
       await sweetTopSmallSuccessAlert("Modified successfully!", 700);
@@ -92,26 +98,32 @@ export function Settings() {
       }
     }
   };
+
   return (
     <Box className={"settings"}>
       <Box className={"member-media-frame"}>
-        <img src={memberImage} className={"mb-image"} />
+        <img src={memberImage} alt="profile" className={"mb-image"} />
         <div className={"media-change-box"}>
           <span>Upload image</span>
-          <p>JPG, JPEG, PNG formats only!</p>
-          <div className={"up-del-box"}>
-            <Button component="label" onChange={handleImageViewer}>
-              <CloudDownloadIcon />
-              <input type="file" hidden />
-            </Button>
-          </div>
+          <p>JPG, JPEG or PNG only.</p>
+          <Button
+            component="label"
+            className="ng-btn ng-btn--ghost"
+            variant="outlined"
+            startIcon={<CloudUploadOutlinedIcon />}
+            onChange={handleImageViewer}
+          >
+            Choose file
+            <input type="file" hidden />
+          </Button>
         </div>
       </Box>
+
       <Box className={"input-frame"}>
-        <div className={"long-input"}>
-          <label className={"spec-label"}>Username</label>
+        <div className={"ng-field"}>
+          <label>Username</label>
           <input
-            className={"spec-input mb-nick"}
+            className={"ng-input mb-nick"}
             type="text"
             placeholder={authMember?.memberNick}
             value={memberUpdateInput.memberNick}
@@ -119,28 +131,27 @@ export function Settings() {
             onChange={memberNickHandler}
           />
         </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"short-input"}>
-          <label className={"spec-label"}>Phone</label>
+        <div className={"ng-field"}>
+          <label>Phone</label>
           <input
-            className={"spec-input mb-phone"}
+            className={"ng-input mb-phone"}
             type="text"
-            placeholder={authMember?.memberPhone ?? "No Phone"}
+            placeholder={authMember?.memberPhone ?? "No phone"}
             value={memberUpdateInput.memberPhone}
             name="memberPhone"
             onChange={memberPhoneHandler}
           />
         </div>
-        <div className={"short-input"}>
-          <label className={"spec-label"}>Address</label>
+      </Box>
+
+      <Box className={"input-frame single"}>
+        <div className={"ng-field"}>
+          <label>Address</label>
           <input
-            className={"spec-input  mb-address"}
+            className={"ng-input mb-address"}
             type="text"
             placeholder={
-              authMember?.memberAddress
-                ? authMember.memberAddress
-                : "No Address"
+              authMember?.memberAddress ? authMember.memberAddress : "No address"
             }
             value={memberUpdateInput.memberAddress}
             name="memberAddress"
@@ -148,13 +159,14 @@ export function Settings() {
           />
         </div>
       </Box>
-      <Box className={"input-frame"}>
-        <div className={"long-input"}>
-          <label className={"spec-label"}>Description</label>
+
+      <Box className={"input-frame single"}>
+        <div className={"ng-field"}>
+          <label>Description</label>
           <textarea
-            className={"spec-textarea mb-description"}
+            className={"ng-textarea mb-description"}
             placeholder={
-              authMember?.memberDesc ? authMember.memberDesc : "No Descrtion"
+              authMember?.memberDesc ? authMember.memberDesc : "No description"
             }
             value={memberUpdateInput.memberDesc}
             name="memberDesc"
@@ -162,9 +174,14 @@ export function Settings() {
           />
         </div>
       </Box>
+
       <Box className={"save-box"}>
-        <Button variant={"contained"} onClick={handleSubmitButton}>
-          Save
+        <Button
+          className="ng-btn ng-btn--primary"
+          variant={"contained"}
+          onClick={handleSubmitButton}
+        >
+          Save Changes
         </Button>
       </Box>
     </Box>

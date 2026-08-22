@@ -3,7 +3,7 @@ import Badge from "@mui/material/Badge";
 
 export const RippleBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
-    color: "#44b700",
+    color: theme.palette.primary.main, // "#2F5233" — brend yashil rangi
     background: "white",
     "&::after": {
       position: "absolute",

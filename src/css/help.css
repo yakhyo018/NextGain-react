@@ -1,182 +1,191 @@
-.help-page {
-  width: 100%;
-  height: auto;
-  display: flex;
-  background: #f8f8ff;
-}
+/* ==========================================================================
+ * @claude-change  2026-08-22  |  NextGain design rewrite
+ * REWRITTEN
+ *
+ * Help center: tabs, terms list, FAQ accordions, contact form.
+ * ========================================================================== */
 
-.help-page .help-container {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  flex-direction: row;
+/* ==========================================================================
+   Help center
+   ========================================================================== */
+
+.help-page {
+  padding: 40px 0 90px;
 }
 
 .help-page .help-menu {
-  width: 100%;
-  height: 60px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  border-bottom: 1px solid #f8f8ff;
+  margin-bottom: 26px;
 }
 
-.help-page .help-menu .table-list {
-  display: flex;
-  justify-content: space-between;
+.help-page .table_list .MuiTab-root {
+  padding-left: 0;
+  padding-right: 26px;
+  min-width: auto;
+  align-items: flex-start;
 }
 
-.help-page .css-1gsv261 {
-  width: 75%;
+.help-page .MuiTabPanel-root {
+  padding: 0;
 }
 
-.help-page .css-heg063-MuiTabs-flexContainer {
-  justify-content: space-between;
+/* ---------- terms ---------- */
+
+.help-page .rules-frame {
+  background: var(--ng-surface);
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-r);
+  padding: 28px 30px;
+  max-width: 860px;
 }
 
-.help-page .css-19kzrtu {
-  padding-top: 24px;
+.help-page .rules-frame p {
+  position: relative;
+  margin: 0 0 16px;
+  padding-left: 26px;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--ng-text-muted);
 }
 
-.help-page .help-main-content {
-  width: 100%;
-  height: 1000px;
+.help-page .rules-frame p:last-child {
+  margin-bottom: 0;
 }
 
-.help-page .rules-box {
-  padding: 24px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #f8f8ff;
-  border: 1px solid #ededed;
-  box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
-  border-radius: 8px;
+.help-page .rules-frame p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ng-green);
 }
 
-.rules-box .rules-frame {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.rules-box .rules-frame p {
-  border-bottom: 1px solid #dddddd;
-  color: #000000;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  letter-spacing: 0.00938em;
-}
+/* ---------- faq ---------- */
 
 .help-page .accordion-menu {
-  width: 100%;
-  height: auto;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  max-width: 860px;
 }
 
-.help-page .admin-letter-box {
-  padding: 60px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #f8f8ff;
-  border: 1px solid #ededed;
-  box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
-  border-radius: 8px;
+.help-page .accordion-menu .MuiAccordionSummary-root {
+  min-height: 54px;
+  padding: 0 18px;
 }
 
-.help-page .admin-letter-box .admin-letter-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.help-page .accordion-menu .MuiAccordionSummary-content p {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ng-text);
 }
 
-.help-page .admin-letter-container .admin-letter-frame {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
+.help-page .accordion-menu .MuiAccordionDetails-root {
+  padding: 0 18px 18px;
 }
 
-.help-page .admin-letter-frame span {
-  font-family: "ABeeZee";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 28px;
-  color: #140342;
+.help-page .accordion-menu .MuiAccordionDetails-root p {
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--ng-text-muted);
 }
 
-.help-page .admin-letter-frame p {
-  margin-top: 20px;
-  font-family: "Sedan";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 26px;
-  color: #4f547b;
+/* ---------- contact ---------- */
+
+.help-page .contact-grid {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  max-width: 900px;
 }
 
-.help-page .admin-letter-container .admin-letter-frame {
-  display: flex;
-  flex-direction: column;
+.help-page .contact-card,
+.help-page .admin-letter-frame {
+  background: var(--ng-surface);
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-r);
+  padding: 24px 26px;
 }
 
-.help-page .admin-letter-frame .admin-input-box {
-  margin-top: 30px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.help-page .admin-letter-frame .admin-input-box label {
-  font-family: "Verdana";
-  font-style: normal;
-  font-weight: 700;
+.help-page .contact-card h4 {
+  margin: 0 0 4px;
+  font-family: "Poppins", "Inter", sans-serif;
   font-size: 16px;
-  line-height: 19px;
-  color: #140342;
+  font-weight: 700;
 }
 
-.help-page .admin-letter-frame .admin-input-box input {
-  margin-top: 10px;
-  padding: 20px;
-  width: 100%;
-  height: 60px;
-  display: flex;
-  background: #f8f8ff;
-  border: 1px solid #dddddd;
-  border-radius: 8px;
-  font-family: "Verdana";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 26px;
-  color: #4f547b;
+.help-page .contact-card > p {
+  margin: 0 0 20px;
+  font-size: 13px;
+  color: var(--ng-text-muted);
 }
 
-.help-page .admin-letter-frame .admin-input-box textarea {
-  margin-top: 10px;
-  padding: 20px;
-  width: 100%;
-  height: 150px;
+.help-page .contact-card .contact-line {
   display: flex;
-  background: #f8f8ff;
-  border: 1px solid #dddddd;
-  border-radius: 8px;
-  font-family: "Verdana";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 26px;
-  color: #4f547b;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 11px;
+  margin-bottom: 15px;
+  font-size: 13px;
+  color: var(--ng-text-muted);
+}
+
+.help-page .contact-card .contact-line svg {
+  font-size: 17px;
+  color: var(--ng-green);
+  margin-top: 2px;
+}
+
+.help-page .admin-letter-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.help-page .admin-input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.help-page .admin-input-box label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ng-text);
+}
+
+.help-page .admin-input-box input,
+.help-page .admin-input-box textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-r-sm);
+  background: var(--ng-surface);
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--ng-text);
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.help-page .admin-input-box textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.help-page .admin-input-box input:focus,
+.help-page .admin-input-box textarea:focus {
+  border-color: var(--ng-green);
+  box-shadow: 0 0 0 3px rgba(59, 110, 79, 0.12);
+}
+
+@media (max-width: 900px) {
+  .help-page .contact-grid {
+    grid-template-columns: 1fr;
+  }
 }
