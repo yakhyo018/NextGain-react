@@ -393,6 +393,15 @@ img {
   color: var(--ng-text);
 }
 
+/* small grey tag next to a label for fields that may be left empty */
+.ng-optional {
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ng-text-faint);
+  text-transform: lowercase;
+}
+
 .ng-input,
 .ng-textarea {
   width: 100%;

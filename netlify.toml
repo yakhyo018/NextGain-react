@@ -1,0 +1,24 @@
+# =============================================================================
+# @claude-change  2026-08-22  |  Netlify deploy config
+#
+# NPM_FLAGS is not optional here: package.json still lists @material-ui/core@4,
+# whose peer range stops at react@17, while the project runs react@18. Plain
+# `npm install` fails with ERESOLVE and the build never starts.
+# The cleaner long-term fix is to drop @material-ui/core — nothing imports it
+# any more since the auth modal became the /login and /register pages.
+# =============================================================================
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# react-router-dom uses the History API, so every deep link (/products/123,
+# /orders, a page refresh) must be served index.html instead of a 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

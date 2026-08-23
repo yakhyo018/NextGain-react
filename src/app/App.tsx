@@ -67,9 +67,13 @@ function App() {
     handleLogoutRequest,
   };
 
+  // @claude-change: /login and /register are full-screen pages. They bring
+  // their own AuthNavbar and show no footer, so neither shared header runs.
+  const isAuthPage = /^\/(login|register)/.test(location.pathname);
+
   return (
     <>
-      {location.pathname === "/" ? (
+      {isAuthPage ? null : location.pathname === "/" ? (
         <HomeNavbar {...navProps} />
       ) : (
         <OtherNavbar {...navProps} />
@@ -99,7 +103,7 @@ function App() {
         </Route>
       </Switch>
 
-      <Footer />
+      {isAuthPage ? null : <Footer />}
     </>
   );
 }

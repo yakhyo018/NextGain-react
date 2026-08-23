@@ -1,13 +1,20 @@
 /* ==========================================================================
  * @claude-change  2026-08-22  |  NextGain design rewrite
- * NEW FILE
+ * REWRITTEN
  *
- * Standalone register page replacing the modal. The MemberService.signup call
- * is the same one the modal used.
+ * Full-bleed photo background, its own AuthNavbar, white form panel on the
+ * right, no footer. The MemberService.signup call is unchanged.
+ *
+ * The three fields map onto what the backend actually stores:
+ *   Full Name      -> memberNick
+ *   Phone          -> memberPhone
+ *   Password       -> memberPassword
  * ========================================================================== */
 
 import { useState } from "react";
-import { Box, Button, Container, Stack } from "@mui/material";
+import { Box, Button, Container, IconButton, Stack } from "@mui/material";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { Link, useHistory } from "react-router-dom";
 import { T } from "../../../lib/types/common";
 import { Messages } from "../../../lib/config";
@@ -15,6 +22,7 @@ import { MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
+import AuthNavbar from "../../components/headers/AuthNavbar";
 import "../../../css/auth.css";
 
 export default function RegisterPage() {
@@ -23,6 +31,7 @@ export default function RegisterPage() {
   const [memberNick, setMemberNick] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
   const [memberPassword, setMemberPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   /** HANDLERS **/
 
@@ -55,38 +64,43 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className={"auth-page"}>
-      <Container>
-        <Box className={"auth-card"}>
-          <Box
-            className={"auth-visual"}
-            sx={{ backgroundImage: "url(/img/otherNavbarImg.jpg)" }}
-          >
-            <Box className={"visual-title"}>
-              Join
+    <div
+      className={"auth-page"}
+      style={{ backgroundImage: "url(/img/signup.png)" }}
+    >
+      <AuthNavbar title="Register" />
+
+      <Box className={"auth-body"}>
+        <Container className={"auth-inner"}>
+          {/* motivational line, sitting low over the photo */}
+          <Box className={"auth-quote"}>
+            <span className={"quote-kicker"}>NextGain</span>
+            <h3>
+              Start where
               <br />
-              NextGain
-            </Box>
-            <Box className={"visual-sub"}>
-              Track your orders, save your favourites and get member-only prices
-              on every restock.
-            </Box>
+              <em>you are</em>
+            </h3>
+            <p>
+              The best day to begin was yesterday. The second best is the one
+              you are standing in.
+            </p>
           </Box>
 
-          <Box className={"auth-form"}>
+          <Box className={"auth-card"}>
             <h2>Create your account</h2>
             <p className={"auth-lead"}>Join NextGain Store today.</p>
 
             <Stack className={"auth-fields"}>
               <div className={"ng-field"}>
-                <label htmlFor="reg-nick">Username</label>
+                <label htmlFor="reg-nick">Full Name</label>
                 <input
                   id="reg-nick"
                   className={"ng-input"}
                   type="text"
-                  placeholder="Enter your username"
+                  placeholder="Enter your full name"
                   value={memberNick}
                   onChange={(e) => setMemberNick(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
 
@@ -99,25 +113,39 @@ export default function RegisterPage() {
                   placeholder="+998 90 123 45 67"
                   value={memberPhone}
                   onChange={(e) => setMemberPhone(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
 
               <div className={"ng-field"}>
                 <label htmlFor="reg-pass">Password</label>
-                <input
-                  id="reg-pass"
-                  className={"ng-input"}
-                  type="password"
-                  placeholder="Create a password"
-                  value={memberPassword}
-                  onChange={(e) => setMemberPassword(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
+                <div className={"pass-wrap"}>
+                  <input
+                    id="reg-pass"
+                    className={"ng-input"}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Create a password"
+                    value={memberPassword}
+                    onChange={(e) => setMemberPassword(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                  />
+                  <IconButton
+                    className={"pass-toggle"}
+                    aria-label={showPassword ? "hide password" : "show password"}
+                    onClick={() => setShowPassword((v) => !v)}
+                  >
+                    {showPassword ? (
+                      <VisibilityOffOutlinedIcon sx={{ fontSize: 18 }} />
+                    ) : (
+                      <VisibilityOutlinedIcon sx={{ fontSize: 18 }} />
+                    )}
+                  </IconButton>
+                </div>
               </div>
             </Stack>
 
             <Button
-              className={"ng-btn ng-btn--primary auth-submit"}
+              className={"auth-submit"}
               variant="contained"
               onClick={handleSignupRequest}
             >
@@ -128,8 +156,8 @@ export default function RegisterPage() {
               Already have an account? <Link to="/login">Login</Link>
             </Box>
           </Box>
-        </Box>
-      </Container>
+        </Container>
+      </Box>
     </div>
   );
 }

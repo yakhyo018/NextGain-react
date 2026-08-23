@@ -63,13 +63,16 @@ export function Settings() {
   const handleSubmitButton = async () => {
     try {
       if (!authMember) throw new Error(Messages.error2);
+
+      // @claude-change: only the two identity fields are required now.
+      // Address and description are optional -- leaving them empty is a valid
+      // way to clear them, and blanking memberNick/memberPhone would break the
+      // unique index on the backend.
       if (
-        memberUpdateInput.memberNick === "" ||
-        memberUpdateInput.memberPhone === "" ||
-        memberUpdateInput.memberAddress === "" ||
-        memberUpdateInput.memberDesc === ""
+        !memberUpdateInput.memberNick?.trim() ||
+        !memberUpdateInput.memberPhone?.trim()
       ) {
-        throw new Error(Messages.error3);
+        throw new Error("Username and phone are required!");
       }
 
       const member = new MemberService();
@@ -146,7 +149,9 @@ export function Settings() {
 
       <Box className={"input-frame single"}>
         <div className={"ng-field"}>
-          <label>Address</label>
+          <label>
+            Address <span className="ng-optional">optional</span>
+          </label>
           <input
             className={"ng-input mb-address"}
             type="text"
@@ -162,7 +167,9 @@ export function Settings() {
 
       <Box className={"input-frame single"}>
         <div className={"ng-field"}>
-          <label>Description</label>
+          <label>
+            Description <span className="ng-optional">optional</span>
+          </label>
           <textarea
             className={"ng-textarea mb-description"}
             placeholder={

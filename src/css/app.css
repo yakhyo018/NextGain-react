@@ -21,12 +21,14 @@
   flex: 1;
 }
 
+/* @claude-change: .auth-page is deliberately NOT in this list. The shorthand
+   `background:` resets background-size and background-repeat, which killed the
+   `cover` / `no-repeat` on the login and register photos and made them tile. */
 .homepage,
 .products-page,
 .order-page,
 .help-page,
-.user-page,
-.auth-page {
+.user-page {
   flex: 1;
   background: var(--ng-bg);
 }

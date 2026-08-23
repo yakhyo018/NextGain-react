@@ -103,10 +103,20 @@ class MemberService {
   public async updateMember(input: MemberUpdateInput): Promise<Member> {
     try {
       const formData = new FormData();
-      formData.append("memberNick", input.memberNick || "");
-      formData.append("memberPhone", input.memberPhone || "");
-      formData.append("memberAddress", input.memberAddress || "");
-      formData.append("memberDesc", input.memberDesc || "");
+
+      // memberNick and memberPhone carry a unique index in the Member schema.
+      // Sending "" would blank the field, and the second member whose phone is
+      // "" collides with the first one -> E11000 duplicate key -> 500.
+      // So identity fields are only sent when they actually hold a value.
+      if (input.memberNick?.trim())
+        formData.append("memberNick", input.memberNick.trim());
+      if (input.memberPhone?.trim())
+        formData.append("memberPhone", input.memberPhone.trim());
+
+      // address and description are optional and not indexed, so an empty
+      // value is legitimate here -- it lets the member clear the field
+      formData.append("memberAddress", input.memberAddress ?? "");
+      formData.append("memberDesc", input.memberDesc ?? "");
 
       // Only send memberImage when the user actually picked a new file.
       // When nothing was chosen it is still the old path string, and multer
