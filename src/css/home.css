@@ -4,6 +4,9 @@
  *
  * Full-bleed statistics strip, product rows, video banner,
  * active-users / special-offer split and the offers swiper.
+ *
+ * @claude-change  2026-10-20  |  Mobile layout
+ * Stats strip, product rows, video banner and offers resized for phones.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -415,5 +418,92 @@
   .popular-dishes-frame .cards-frame,
   .new-products-frame .cards-frame {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .homepage {
+    padding-bottom: 56px;
+  }
+
+  /* 2x2 stats: each box gets its own cell with a hairline between them */
+  .static-frame .static-box,
+  .static-frame .static-box:first-child,
+  .static-frame .static-box:last-child {
+    gap: 10px;
+    padding: 16px 10px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ng-border);
+  }
+
+  .static-frame .static-box:nth-child(odd) {
+    padding-left: 0;
+    border-right: 1px solid var(--ng-border);
+  }
+
+  .static-frame .static-box:nth-child(n + 3) {
+    border-bottom: 0;
+  }
+
+  .static-frame .static-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .static-frame .static-num {
+    font-size: 16px;
+  }
+
+  .static-frame .static-text {
+    font-size: 11.5px;
+    line-height: 1.35;
+  }
+
+  .popular-dishes-frame {
+    padding-top: 40px;
+  }
+
+  .new-products-frame {
+    padding-top: 36px;
+  }
+
+  .ads-restaurant-frame {
+    margin-top: 40px;
+    height: 200px;
+  }
+
+  .ads-restaurant-frame .ads-overlay {
+    padding: 0 22px;
+  }
+
+  .ads-restaurant-frame .ads-title {
+    font-size: 21px;
+  }
+
+  .active-users-frame .avatars {
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+
+  .active-users-frame .avatars .member-card {
+    margin-right: 12px;
+  }
+
+  .offer-frame .countdown .unit {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .events-frame {
+    margin-top: 40px;
+  }
+
+  /* one card per view instead of the desktop third */
+  .events-frame .events-info-frame {
+    width: 86% !important;
+    min-width: 0;
+  }
+
+  .events-frame .event-card {
+    height: auto;
+    min-height: 148px;
   }
 }

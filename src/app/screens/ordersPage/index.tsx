@@ -102,6 +102,8 @@ export default function OrdersPage() {
                   onChange={handleChange}
                   aria-label="orders by status"
                   className={"table_list"}
+                  variant="scrollable"
+                  scrollButtons={false}
                 >
                   <Tab label={`Paused Orders (${pausedCount})`} value={"1"} />
                   <Tab

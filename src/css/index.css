@@ -6,6 +6,9 @@
  * shadows, spacing) plus the shared primitives every page reuses --
  * .ng-card, .ng-chip, .ng-pill, .ng-btn, .ng-input, .ng-logo.
  * Change a colour here and the whole site follows.
+ *
+ * @claude-change  2026-10-20  |  Mobile layout
+ * Phone-size rhythm tokens and a wrapping section head at the end of the file.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -473,4 +476,43 @@ img {
 
 .ng-scroll::-webkit-scrollbar-track {
   background: transparent;
+}
+
+/* ---------- phone rhythm ---------- */
+
+@media (max-width: 600px) {
+  :root {
+    --ng-gap: 12px;
+    --ng-section-y: 44px;
+    --ng-nav-h: 60px;
+  }
+
+  .ng-section-head {
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .ng-section-title,
+  .category-title {
+    font-size: 13.5px;
+    letter-spacing: 1px;
+  }
+
+  .ng-card .ng-card-body {
+    padding: 10px 10px 12px;
+  }
+
+  .ng-card .ng-card-name {
+    font-size: 13px;
+  }
+
+  .ng-card .ng-card-price {
+    font-size: 14.5px;
+  }
+
+  /* inputs under 16px make iOS Safari zoom the page on focus */
+  .ng-input,
+  .ng-textarea {
+    font-size: 16px;
+  }
 }

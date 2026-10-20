@@ -3,6 +3,10 @@
  * REWRITTEN
  *
  * Products page (filter sidebar + grid) and the product detail page.
+ *
+ * @claude-change  2026-10-20  |  Mobile layout
+ * Below 640px the category list scrolls sideways, the toolbar wraps and the
+ * detail gallery puts its thumbnails under the main image.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -447,12 +451,15 @@
 }
 
 @media (max-width: 1100px) {
+  /* minmax(0, …) so the sideways category row on phones cannot stretch
+     the column wider than the screen */
   .products .shop-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .products .shop-sidebar {
     position: static;
+    min-width: 0;
   }
 
   .products .product-wrapper,
@@ -474,5 +481,107 @@
   .products .product-wrapper,
   .chosen-product .related-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .products-page {
+    padding: 24px 0 60px;
+  }
+
+  .products .shop-sidebar {
+    gap: 12px;
+  }
+
+  .products .filter-card {
+    padding: 14px;
+  }
+
+  /* categories become one sideways-scrolling row of chips */
+  .products .category-list {
+    flex-direction: row;
+    gap: 8px;
+    overflow-x: auto;
+    margin: 0 -14px;
+    padding: 0 14px 4px;
+    scrollbar-width: none;
+  }
+
+  .products .category-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .products .category-list button,
+  .products .category-list button.is-active {
+    flex-shrink: 0;
+    width: auto;
+    margin: 0;
+    padding: 7px 14px;
+    gap: 8px;
+    border: 1px solid var(--ng-border);
+    border-radius: var(--ng-r-pill);
+    white-space: nowrap;
+  }
+
+  .products .category-list button.is-active {
+    border-color: var(--ng-green);
+  }
+
+  .products .single-search-input {
+    font-size: 16px;
+  }
+
+  .products .shop-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .products .dishes-filter-box {
+    flex-wrap: wrap;
+  }
+
+  .products .pagination-section {
+    margin-top: 32px;
+  }
+
+  .chosen-product {
+    padding-top: 24px;
+  }
+
+  .chosen-product .chosen-product-slider {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .chosen-product .thumbs {
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .chosen-product .thumbs .thumb {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+  }
+
+  .chosen-product .product-name {
+    font-size: 22px;
+  }
+
+  .chosen-product .product-price {
+    font-size: 25px;
+  }
+
+  .chosen-product .button-box {
+    max-width: none;
+  }
+
+  .chosen-product .detail-panel {
+    margin-top: 36px;
+    padding: 20px 18px;
+  }
+
+  .chosen-product .related-frame {
+    margin-top: 40px;
   }
 }

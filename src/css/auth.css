@@ -317,3 +317,27 @@
     padding: 34px 26px 30px;
   }
 }
+
+/* @claude-change 2026-10-20 | Mobile layout: the breadcrumb leaves the bar
+   on phones (it pushed the icons 13px off a 375px screen) */
+@media (max-width: 600px) {
+  .auth-navbar .bar {
+    gap: 12px;
+  }
+
+  .auth-navbar .crumbs {
+    display: none;
+  }
+
+  .auth-navbar .page-title {
+    font-size: 17px;
+  }
+
+  .auth-card {
+    padding: 28px 18px 24px;
+  }
+
+  .auth-card input {
+    font-size: 16px;
+  }
+}

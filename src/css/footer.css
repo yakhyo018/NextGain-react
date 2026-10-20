@@ -3,6 +3,9 @@
  * REWRITTEN
  *
  * Dark footer: brand column, four link columns, bottom bar.
+ *
+ * @claude-change  2026-10-20  |  Mobile layout
+ * Two link columns per row and a stacked bottom bar on phones.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -147,5 +150,50 @@
   .ng-footer .foot-columns {
     flex-wrap: wrap;
     gap: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ng-footer {
+    padding: 44px 0 22px;
+  }
+
+  .ng-footer .foot-brand {
+    width: 100%;
+  }
+
+  .ng-footer .foot-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 20px;
+    width: 100%;
+  }
+
+  /* Contact Us holds an address and an email: give it the whole row */
+  .ng-footer .foot-columns > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .ng-footer .find-us {
+    max-width: none;
+  }
+
+  .ng-footer .find-us > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ng-footer .foot-divider {
+    margin: 32px 0 18px;
+  }
+
+  .ng-footer .copyright-txt {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .ng-footer .payment-icons {
+    flex-wrap: wrap;
   }
 }

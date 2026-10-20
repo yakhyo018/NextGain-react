@@ -20,6 +20,7 @@ import { NavLink, useHistory, useLocation } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { Logout } from "@mui/icons-material";
 import Basket from "./Basket";
+import MobileMenu from "./MobileMenu";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
@@ -146,6 +147,8 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                   onClick={handleLogoutClick}
                 />
               )}
+
+              <MobileMenu />
 
               <Menu
                 anchorEl={anchorEl}

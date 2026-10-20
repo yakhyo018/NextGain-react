@@ -3,6 +3,9 @@
  * REWRITTEN
  *
  * Orders list: order cards, status pills, totals row, empty state.
+ *
+ * @claude-change  2026-10-20  |  Mobile layout
+ * Phone layout at the end: totals stack under each other, actions go full width.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -204,4 +207,77 @@
   margin-top: 18px;
   font-size: 12.5px;
   color: var(--ng-text-faint);
+}
+
+@media (max-width: 600px) {
+  .order-page {
+    padding: 20px 0 60px;
+  }
+
+  .order-page .order-nav-frame {
+    margin-bottom: 18px;
+  }
+
+  .order-page .table_list .MuiTab-root {
+    padding-right: 18px;
+  }
+
+  .order-page .order-head {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .order-page .order-box-scroll {
+    padding: 4px 14px;
+  }
+
+  .order-page .orders-name-price {
+    gap: 10px;
+  }
+
+  .order-page .order-dish-img {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* qty x price drops under the name so the name keeps its width */
+  .order-page .orders-name-price {
+    flex-wrap: wrap;
+  }
+
+  .order-page .title-dish {
+    flex-basis: calc(100% - 54px);
+  }
+
+  .order-page .price-box {
+    width: 100%;
+    justify-content: flex-end;
+    font-size: 12.5px;
+  }
+
+  .order-page .total-price-box {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px;
+  }
+
+  .order-page .box-total {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .order-page .box-total > * {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .order-page .order-actions {
+    width: 100%;
+  }
+
+  .order-page .order-actions .MuiButton-root {
+    flex: 1;
+  }
 }

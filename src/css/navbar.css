@@ -4,6 +4,10 @@
  *
  * Solid navigation strip, home hero band, inner-page banner,
  * cart drawer and account menu.
+ *
+ * @claude-change  2026-10-20  |  Mobile layout
+ * Below 900px the link row gives way to the MobileMenu drawer; below 600px
+ * the bar, hero and banner shrink to phone size.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -470,12 +474,164 @@
   font-weight: 500;
 }
 
+/* ---------- mobile menu (MobileMenu.tsx) ---------- */
+
+/* hidden on desktop: the centred link row does the job there */
+.ng-nav .ng-nav-burger.MuiIconButton-root {
+  display: none;
+}
+
+.ng-mobile-drawer .MuiDrawer-paper {
+  width: min(300px, 84vw);
+  background: var(--ng-dark);
+  color: var(--ng-on-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+.ng-mobile-drawer .drawer-head {
+  height: var(--ng-nav-h);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px 0 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ng-mobile-drawer .drawer-close.MuiIconButton-root {
+  color: var(--ng-on-dark-muted);
+}
+
+.ng-mobile-drawer .drawer-links {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+}
+
+.ng-mobile-drawer .drawer-links a {
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ng-on-dark-muted);
+  border-left: 3px solid transparent;
+}
+
+.ng-mobile-drawer .drawer-links a.is-active {
+  color: var(--ng-on-dark);
+  border-left-color: var(--ng-green-soft);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ng-mobile-drawer .drawer-auth {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ng-mobile-drawer .drawer-btn {
+  height: 42px;
+  border-radius: var(--ng-r-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: var(--ng-on-dark);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ng-mobile-drawer .drawer-btn--primary {
+  border-color: var(--ng-green-soft);
+  background: var(--ng-green-soft);
+  color: var(--ng-dark);
+}
+
 @media (max-width: 900px) {
+  /* the link row moves into the drawer */
   .ng-nav .ng-nav-links {
-    gap: 18px;
+    display: none;
+  }
+
+  .ng-nav .ng-nav-burger.MuiIconButton-root {
+    display: inline-flex;
+  }
+
+  .home-navbar .header-frame {
+    padding: 64px 0 72px;
   }
 
   .home-navbar .head-main-txt {
     font-size: 38px;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar-container .ng-nav {
+    gap: 12px;
+  }
+
+  .ng-nav .ng-nav-actions {
+    gap: 2px;
+  }
+
+  /* search lives on /products and Login in the drawer, so the bar keeps
+     only the cart, the avatar and the menu button */
+  .ng-nav .ng-nav-icon[aria-label="search products"],
+  .ng-nav .login-button.MuiButton-root {
+    display: none;
+  }
+
+  .ng-nav .user-avatar {
+    width: 30px;
+    height: 30px;
+    margin: 0 4px;
+  }
+
+  .ng-logo {
+    font-size: 19px;
+  }
+
+  .home-navbar .home-hero {
+    background-position: 70% center;
+  }
+
+  .home-navbar .header-frame {
+    padding: 48px 0 56px;
+  }
+
+  .home-navbar .head-main-txt {
+    font-size: 30px;
+    letter-spacing: -0.6px;
+  }
+
+  .home-navbar .wel-txt {
+    font-size: 13.5px;
+  }
+
+  .home-navbar .signup-button.MuiButton-root {
+    height: 44px;
+    padding: 0 30px;
+  }
+
+  .other-navbar .page-banner {
+    padding: 28px 0 30px;
+  }
+
+  .other-navbar .page-banner h1 {
+    font-size: 24px;
+  }
+
+  .other-navbar .page-banner .crumbs {
+    flex-wrap: wrap;
+  }
+
+  /* the cart dropdown fills the phone width instead of a fixed 344px */
+  .ng-cart-menu .MuiPaper-root {
+    width: calc(100vw - 24px);
+    max-width: 344px;
   }
 }

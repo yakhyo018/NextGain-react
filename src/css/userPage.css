@@ -3,6 +3,9 @@
  * REWRITTEN
  *
  * My Page: profile card and the settings form.
+ *
+ * @claude-change  2026-10-20  |  Mobile layout
+ * Tighter padding and a full-width save button on phones.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -198,5 +201,28 @@
   .user-page .my-page-frame,
   .user-page .input-frame {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .user-page {
+    padding: 20px 0 60px;
+  }
+
+  .user-page .order-info-box {
+    padding: 22px 18px;
+  }
+
+  .user-page .my-page-right {
+    padding: 20px 16px;
+  }
+
+  .user-page .member-media-frame {
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .user-page .save-box .MuiButton-root {
+    width: 100%;
   }
 }

@@ -3,6 +3,9 @@
  * REWRITTEN
  *
  * Help center: tabs, terms list, FAQ accordions, contact form.
+ *
+ * @claude-change  2026-10-20  |  Mobile layout
+ * Tighter panels and 16px form fields on phones.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -187,5 +190,38 @@
 @media (max-width: 900px) {
   .help-page .contact-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .help-page {
+    padding: 20px 0 60px;
+  }
+
+  .help-page .help-menu {
+    margin-bottom: 18px;
+  }
+
+  .help-page .rules-frame {
+    padding: 20px 16px;
+  }
+
+  .help-page .rules-frame p {
+    padding-left: 18px;
+    font-size: 13px;
+  }
+
+  .help-page .contact-card {
+    padding: 20px 16px;
+  }
+
+  /* inputs under 16px make iOS Safari zoom the page on focus */
+  .help-page .admin-input-box input,
+  .help-page .admin-input-box textarea {
+    font-size: 16px;
+  }
+
+  .help-page .admin-letter-frame .MuiButton-root {
+    width: 100%;
   }
 }
