@@ -23,8 +23,7 @@ export default function Footer() {
         <Stack className="foot-top">
           <Stack className="foot-brand">
             <Box className="ng-logo">
-              <span className="ng-logo-a">NEXT</span>
-              <span className="ng-logo-b">GAIN</span>
+              <span className="ng-logo-a">next</span><span className="ng-logo-b">gain</span>
             </Box>
             <Box className="foot-desc-txt">
               Premium supplements for strength, recovery and results.

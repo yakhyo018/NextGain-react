@@ -7,6 +7,9 @@
  *   - 'Our Family Brands' and the Google Maps iframe were removed: restaurant
  *     leftovers that are not part of the design
  * The service call, redux slice and pagination logic are unchanged.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * ?collection=PROTEIN (from the home category tiles) preselects a category.
  * ========================================================================== */
 
 import { ChangeEvent, useEffect, useState } from "react";
@@ -23,6 +26,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { createSelector } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import ProductService from "../../services/ProductService";
+import { useLocation } from "react-router-dom";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { COLLECTION_ORDER, collectionLabel } from "../../../lib/data/collections";
 import { CartItem } from "../../../lib/types/search";
@@ -42,6 +46,14 @@ const SORTS: { key: string; label: string }[] = [
   { key: "productViews", label: "Popular" },
 ];
 
+/** ?collection=PROTEIN -> ProductCollection.PROTEIN, anything else -> all */
+const collectionFromQuery = (search: string): ProductCollection | undefined => {
+  const value = new URLSearchParams(search).get("collection");
+  return Object.values(ProductCollection).includes(value as ProductCollection)
+    ? (value as ProductCollection)
+    : undefined;
+};
+
 interface ProductPageProps {
   onAdd: (item: CartItem) => void;
 }
@@ -50,11 +62,13 @@ export default function Products(props: ProductPageProps) {
   const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
+  const location = useLocation();
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
     limit: 8,
     order: "createdAt",
     search: "",
+    productCollection: collectionFromQuery(location.search),
   });
 
   const [searchText, setSearchText] = useState<string>("");

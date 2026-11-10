@@ -4,6 +4,10 @@
  *
  * One product tile, shared by Popular Products, New Arrivals, the products grid
  * and the related-products strip so all four stay identical.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * The cart button is now a labelled "Add" pill; the size badge shows the
+ * size in plain case. Click handlers are unchanged.
  * ========================================================================== */
 
 import { Box, Button, Stack } from "@mui/material";
@@ -37,7 +41,9 @@ export default function ProductCard(props: ProductCardProps) {
       <Box className="ng-card-media">
         <img src={imagePath} alt={product.productName} />
         {product.productSize ? (
-          <span className="ng-card-badge">{product.productSize}</span>
+          <span className="ng-card-badge">
+            {product.productSize.toLowerCase()}
+          </span>
         ) : null}
       </Box>
 
@@ -72,7 +78,8 @@ export default function ProductCard(props: ProductCardProps) {
                   });
                 }}
               >
-                <AddShoppingCartIcon sx={{ fontSize: 16 }} />
+                <AddShoppingCartIcon sx={{ fontSize: 15 }} />
+                Add
               </Button>
             ) : null}
           </Stack>

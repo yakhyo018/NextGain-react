@@ -6,6 +6,10 @@
  *
  * @claude-change  2026-10-20  |  Mobile layout
  * Tighter panels and 16px form fields on phones.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * Pill tabs, rounded white panels, pastel bullets and contact icons,
+ * larger body text.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -21,10 +25,7 @@
 }
 
 .help-page .table_list .MuiTab-root {
-  padding-left: 0;
-  padding-right: 26px;
   min-width: auto;
-  align-items: flex-start;
 }
 
 .help-page .MuiTabPanel-root {
@@ -35,17 +36,17 @@
 
 .help-page .rules-frame {
   background: var(--ng-surface);
-  border: 1px solid var(--ng-border);
-  border-radius: var(--ng-r);
-  padding: 28px 30px;
+  border: 2px solid var(--ng-border);
+  border-radius: 32px;
+  padding: 32px 36px;
   max-width: 860px;
 }
 
 .help-page .rules-frame p {
   position: relative;
   margin: 0 0 16px;
-  padding-left: 26px;
-  font-size: 13.5px;
+  padding-left: 30px;
+  font-size: 16px;
   line-height: 1.85;
   color: var(--ng-text-muted);
 }
@@ -58,11 +59,19 @@
   content: "";
   position: absolute;
   left: 0;
-  top: 10px;
-  width: 6px;
-  height: 6px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: var(--ng-green);
+  background: var(--ng-mint);
+}
+
+.help-page .rules-frame p:nth-child(2n)::before {
+  background: var(--ng-peach);
+}
+
+.help-page .rules-frame p:nth-child(3n)::before {
+  background: var(--ng-lilac);
 }
 
 /* ---------- faq ---------- */
@@ -75,22 +84,22 @@
 }
 
 .help-page .accordion-menu .MuiAccordionSummary-root {
-  min-height: 54px;
-  padding: 0 18px;
+  min-height: 64px;
+  padding: 0 24px;
 }
 
 .help-page .accordion-menu .MuiAccordionSummary-content p {
-  font-size: 13.5px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--ng-text);
 }
 
 .help-page .accordion-menu .MuiAccordionDetails-root {
-  padding: 0 18px 18px;
+  padding: 0 24px 22px;
 }
 
 .help-page .accordion-menu .MuiAccordionDetails-root p {
-  font-size: 13.5px;
+  font-size: 15px;
   line-height: 1.8;
   color: var(--ng-text-muted);
 }
@@ -99,7 +108,7 @@
 
 .help-page .contact-grid {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
+  grid-template-columns: 320px minmax(0, 1fr);
   gap: 22px;
   align-items: start;
   max-width: 900px;
@@ -108,21 +117,26 @@
 .help-page .contact-card,
 .help-page .admin-letter-frame {
   background: var(--ng-surface);
-  border: 1px solid var(--ng-border);
-  border-radius: var(--ng-r);
-  padding: 24px 26px;
+  border: 2px solid var(--ng-border);
+  border-radius: 32px;
+  padding: 28px 30px;
+}
+
+.help-page .contact-card {
+  background: var(--ng-sky);
+  border-color: var(--ng-sky);
 }
 
 .help-page .contact-card h4 {
   margin: 0 0 4px;
-  font-family: "Poppins", "Inter", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
+  font-family: var(--ng-font);
+  font-size: 22px;
+  font-weight: 800;
 }
 
 .help-page .contact-card > p {
   margin: 0 0 20px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--ng-text-muted);
 }
 
@@ -132,14 +146,19 @@
   align-items: flex-start;
   gap: 11px;
   margin-bottom: 15px;
-  font-size: 13px;
-  color: var(--ng-text-muted);
+  font-size: 15px;
+  color: var(--ng-text);
 }
 
 .help-page .contact-card .contact-line svg {
-  font-size: 17px;
-  color: var(--ng-green);
-  margin-top: 2px;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  padding: 8px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ng-text);
+  margin-top: -6px;
 }
 
 .help-page .admin-letter-frame {
@@ -155,7 +174,7 @@
 }
 
 .help-page .admin-input-box label {
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--ng-text);
 }
@@ -163,12 +182,12 @@
 .help-page .admin-input-box input,
 .help-page .admin-input-box textarea {
   width: 100%;
-  padding: 11px 14px;
-  border: 1px solid var(--ng-border);
+  padding: 13px 18px;
+  border: 2px solid var(--ng-border);
   border-radius: var(--ng-r-sm);
-  background: var(--ng-surface);
+  background: var(--ng-bg);
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--ng-text);
   outline: none;
   transition:
@@ -183,8 +202,8 @@
 
 .help-page .admin-input-box input:focus,
 .help-page .admin-input-box textarea:focus {
-  border-color: var(--ng-green);
-  box-shadow: 0 0 0 3px rgba(59, 110, 79, 0.12);
+  border-color: var(--ng-lilac-deep);
+  box-shadow: 0 0 0 3px rgba(155, 135, 255, 0.28);
 }
 
 @media (max-width: 900px) {
@@ -203,12 +222,13 @@
   }
 
   .help-page .rules-frame {
-    padding: 20px 16px;
+    padding: 22px 18px;
+    border-radius: 26px;
   }
 
   .help-page .rules-frame p {
-    padding-left: 18px;
-    font-size: 13px;
+    padding-left: 24px;
+    font-size: 15px;
   }
 
   .help-page .contact-card {

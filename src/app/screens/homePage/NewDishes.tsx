@@ -3,6 +3,9 @@
  * REWRITTEN
  *
  * Now the 'New Arrivals' row, rendered with ProductCard. Selector unchanged.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * The heading is now "Fresh arrivals" with a highlighted word.
  * ========================================================================== */
 
 import { Box, Container, Stack } from "@mui/material";
@@ -32,9 +35,11 @@ export default function NewDishes(props: NewDishesProps) {
       <Container>
         <Stack className={"main"}>
           <Box className="ng-section-head">
-            <span className="ng-section-title">New Arrivals</span>
+            <span className="ng-section-title">
+              Fresh <span className="ng-hl">arrivals</span>
+            </span>
             <Link to="/products" className="ng-link-all">
-              View All
+              See everything →
             </Link>
           </Box>
 

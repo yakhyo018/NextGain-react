@@ -6,6 +6,10 @@
  *
  * @claude-change  2026-10-20  |  Mobile layout
  * Phone layout at the end: totals stack under each other, actions go full width.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * Pill tabs, rounded order cards with a pastel head, pastel item thumbnails
+ * and a soft empty state.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -26,10 +30,7 @@
 }
 
 .order-page .table_list .MuiTab-root {
-  padding-left: 0;
-  padding-right: 26px;
   min-width: auto;
-  align-items: flex-start;
 }
 
 .order-page .MuiTabPanel-root {
@@ -40,9 +41,9 @@
 
 .order-page .order-main-box {
   background: var(--ng-surface);
-  border: 1px solid var(--ng-border);
-  border-radius: var(--ng-r);
-  margin-bottom: 14px;
+  border: 2px solid var(--ng-border);
+  border-radius: 32px;
+  margin-bottom: 18px;
   overflow: hidden;
   transition: border-color 0.15s ease;
 }
@@ -57,20 +58,27 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  margin: 8px 8px 0;
   padding: 14px 20px;
-  border-bottom: 1px solid var(--ng-border);
-  background: var(--ng-surface-alt);
+  border-radius: 24px;
+  background: var(--ng-peach);
 }
 
+.order-page .order-main-box:nth-child(3n + 2) .order-head { background: var(--ng-mint); }
+.order-page .order-main-box:nth-child(3n + 3) .order-head { background: var(--ng-lilac); }
+
 .order-page .order-head .order-id {
-  font-family: "Poppins", "Inter", sans-serif;
-  font-size: 13.5px;
-  font-weight: 700;
+  font-family: var(--ng-font);
+  font-size: 17px;
+  font-weight: 800;
   color: var(--ng-text);
 }
 
 .order-page .order-head .order-date {
-  font-size: 12.5px;
+  padding: 5px 12px;
+  border-radius: var(--ng-r-pill);
+  background: #fff;
+  font-size: 13px;
   color: var(--ng-text-muted);
 }
 
@@ -95,21 +103,22 @@
 }
 
 .order-page .order-dish-img {
-  width: 52px;
-  height: 52px;
+  width: 60px;
+  height: 60px;
   flex-shrink: 0;
-  border-radius: var(--ng-r-sm);
-  border: 1px solid var(--ng-border);
-  object-fit: cover;
-  background: var(--ng-surface-alt);
+  padding: 5px;
+  border-radius: 18px;
+  object-fit: contain;
+  background: var(--ng-sky);
+  mix-blend-mode: multiply;
 }
 
 .order-page .title-dish {
   flex: 1;
   min-width: 0;
   margin: 0;
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   color: var(--ng-text);
   white-space: nowrap;
   overflow: hidden;
@@ -121,7 +130,7 @@
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: 14.5px;
   color: var(--ng-text-muted);
   white-space: nowrap;
 }
@@ -141,8 +150,10 @@
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  padding: 14px 20px;
-  border-top: 1px solid var(--ng-border);
+  margin: 0 8px 8px;
+  padding: 14px 18px;
+  border-radius: 24px;
+  background: var(--ng-surface-alt);
 }
 
 .order-page .box-total {
@@ -150,7 +161,7 @@
   flex-direction: row;
   align-items: center;
   gap: 22px;
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--ng-text-muted);
 }
 
@@ -161,8 +172,8 @@
 }
 
 .order-page .box-total .grand {
-  font-family: "Poppins", "Inter", sans-serif;
-  font-size: 16px;
+  font-family: var(--ng-font);
+  font-size: 22px;
   font-weight: 800;
   color: var(--ng-text);
   margin-left: 6px;
@@ -177,8 +188,8 @@
 
 .order-page .data-compl {
   margin: 0;
-  font-size: 12px;
-  color: var(--ng-text-faint);
+  font-size: 13px;
+  color: var(--ng-text-muted);
 }
 
 /* empty state */
@@ -188,19 +199,23 @@
   align-items: center;
   gap: 10px;
   padding: 64px 0;
-  background: var(--ng-surface);
-  border: 1px dashed var(--ng-border-strong);
-  border-radius: var(--ng-r);
+  background: var(--ng-surface-alt);
+  border-radius: 36px;
 }
 
 .order-page .order-empty svg {
-  font-size: 34px;
-  color: var(--ng-border-strong);
+  width: 72px;
+  height: 72px;
+  padding: 18px;
+  border-radius: 50%;
+  background: var(--ng-lemon);
+  font-size: 36px;
+  color: var(--ng-text);
 }
 
 .order-page .order-empty span {
-  font-size: 13.5px;
-  color: var(--ng-text-faint);
+  font-size: 16px;
+  color: var(--ng-text-muted);
 }
 
 .order-page .order-count {
@@ -219,7 +234,8 @@
   }
 
   .order-page .table_list .MuiTab-root {
-    padding-right: 18px;
+    padding: 8px 14px !important;
+    font-size: 14px !important;
   }
 
   .order-page .order-head {
@@ -237,8 +253,18 @@
   }
 
   .order-page .order-dish-img {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
+
+  .order-page .order-main-box {
+    border-radius: 26px;
+  }
+
+  .order-page .order-head,
+  .order-page .total-price-box {
+    border-radius: 20px;
   }
 
   /* qty x price drops under the name so the name keeps its width */

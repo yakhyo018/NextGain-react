@@ -39,7 +39,7 @@ export default function HelpPage() {
       <Container className={"help-container"}>
         <TabContext value={value}>
           <Box className={"help-menu"}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Box>
               <Tabs
                 value={value}
                 onChange={handleChange}

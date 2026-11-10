@@ -43,8 +43,7 @@ export default function MobileMenu() {
       >
         <Box className="drawer-head">
           <Box className="ng-logo">
-            <span className="ng-logo-a">NEXT</span>
-            <span className="ng-logo-b">GAIN</span>
+            <span className="ng-logo-a">next</span><span className="ng-logo-b">gain</span>
           </Box>
           <IconButton
             className="drawer-close"

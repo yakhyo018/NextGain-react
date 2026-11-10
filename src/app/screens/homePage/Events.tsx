@@ -4,6 +4,9 @@
  *
  * Tinted offer cards instead of photo cards -- the old images were food
  * photos left over from the restaurant template.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * Heading renamed to "Deals & offers" with a highlighted word.
  * ========================================================================== */
 
 import { Box, Stack } from "@mui/material";
@@ -22,9 +25,11 @@ export default function Events() {
     <div className={"events-frame"}>
       <Stack className={"events-main"}>
         <Box className="ng-section-head">
-          <span className="ng-section-title">Top Events &amp; Offers</span>
+          <span className="ng-section-title">
+            Deals &amp; <span className="ng-hl">offers</span>
+          </span>
           <Link to="/products" className="ng-link-all">
-            View All
+            See everything →
           </Link>
         </Box>
 

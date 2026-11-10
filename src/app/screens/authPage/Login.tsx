@@ -7,6 +7,10 @@
  *
  * Note on the first field: the backend matches a member by memberNick, so the
  * label says Username even though the mock reads "Email or Phone".
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * The gym photo is gone: the quote sits on a pastel panel with a small
+ * product shelf, next to the form card. Handlers are unchanged.
  * ========================================================================== */
 
 import { useState } from "react";
@@ -59,15 +63,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div
-      className={"auth-page"}
-      style={{ backgroundImage: "url(/img/login.jpeg)" }}
-    >
+    <div className={"auth-page auth-page--login"}>
       <AuthNavbar title="Login" />
 
       <Box className={"auth-body"}>
         <Container className={"auth-inner"}>
-          {/* motivational line, sitting low over the photo */}
+          {/* motivational line on a pastel panel, with a little product shelf */}
           <Box className={"auth-quote"}>
             <span className={"quote-kicker"}>NextGain</span>
             <h3>
@@ -79,6 +80,17 @@ export default function LoginPage() {
               Nobody gets there in one session. Show up, refuel, repeat — the
               results follow the routine.
             </p>
+            <Box className={"auth-shelf"}>
+              <span className={"auth-shelf-item auth-shelf-item--mint"}>
+                <img src="/img/categories/protein.webp" alt="" />
+              </span>
+              <span className={"auth-shelf-item auth-shelf-item--peach"}>
+                <img src="/img/categories/pre-workout.png" alt="" />
+              </span>
+              <span className={"auth-shelf-item auth-shelf-item--sky"}>
+                <img src="/img/categories/creatine.webp" alt="" />
+              </span>
+            </Box>
           </Box>
 
           <Box className={"auth-card"}>

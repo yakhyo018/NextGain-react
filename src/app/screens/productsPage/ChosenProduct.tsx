@@ -6,6 +6,9 @@
  *   - setRestaurant/retrieveRestaurant renamed to setStore/retrieveStore
  *   - related products are fetched from the same collection
  *   - Buy Now no longer navigates when the visitor is a guest
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * Related heading renamed to "You may also like".
  * ========================================================================== */
 
 import { useEffect, useState } from "react";
@@ -271,7 +274,9 @@ export default function ChosenProduct(props: ChosenProductProps) {
         {related.length !== 0 ? (
           <Box className={"related-frame"}>
             <Box className="ng-section-head">
-              <span className="ng-section-title">Related Products</span>
+              <span className="ng-section-title">
+                You may also <span className="ng-hl">like</span>
+              </span>
             </Box>
             <Box className={"related-grid"}>
               {related.map((product: Product) => (

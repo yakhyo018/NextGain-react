@@ -5,6 +5,10 @@
  * A navbar used only by /login and /register. Deliberately NOT the shared
  * OtherNavbar: the auth pages sit on a full-bleed photo, carry no cart state
  * and show the page name where the wordmark normally goes.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * The pastel logo now sits on the left (it links home) with the breadcrumb
+ * as a pill next to it; the page name stays as the last crumb.
  * ========================================================================== */
 
 import { Box, Container, IconButton, Stack } from "@mui/material";
@@ -27,8 +31,10 @@ export default function AuthNavbar(props: AuthNavbarProps) {
       <Container>
         <Stack className="bar">
           <Stack className="bar-left">
-            <NavLink to="/" className="page-title">
-              {title}
+            <NavLink to="/" className="page-title" aria-label="NextGain home">
+              <Box className="ng-logo">
+                <span className="ng-logo-a">next</span><span className="ng-logo-b">gain</span>
+              </Box>
             </NavLink>
 
             <Box className="crumbs">

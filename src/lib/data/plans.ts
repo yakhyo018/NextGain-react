@@ -4,6 +4,9 @@
  *
  * Restaurant events replaced with supplement offers; each entry now carries a
  * tint instead of a photo path.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * Tints are now flat pastels (peach, mint, lilac, lemon).
  * ========================================================================== */
 
 export interface Plan {
@@ -22,31 +25,31 @@ export const plans: Plan[] = [
     title: "Up to 30% off",
     desc: "Selected whey protein and isolate blends.",
     cta: "Shop now",
-    tint: "linear-gradient(120deg, #fbeeea 0%, #fdf8f6 100%)",
-    border: "#f0ddd6",
+    tint: "#ffe1cf",
+    border: "#ffe1cf",
   },
   {
     tag: "Creatine Sale",
     title: "Buy 1 get 1 free",
     desc: "Micronized creatine monohydrate, 300g tubs.",
     cta: "Shop now",
-    tint: "linear-gradient(120deg, #eaf1ec 0%, #f7fbf8 100%)",
-    border: "#d8e6dc",
+    tint: "#c9f0de",
+    border: "#c9f0de",
   },
   {
     tag: "New Brand",
     title: "Dynamize arrived",
     desc: "Full pre-workout and amino line now in stock.",
     cta: "Explore",
-    tint: "linear-gradient(120deg, #e9eef5 0%, #f7fafd 100%)",
-    border: "#d6e0ec",
+    tint: "#e3dcff",
+    border: "#e3dcff",
   },
   {
     tag: "Free Shipping",
     title: "On orders over $100",
     desc: "Delivered anywhere in Uzbekistan within 48 hours.",
     cta: "See details",
-    tint: "linear-gradient(120deg, #f4f1e7 0%, #fbfaf5 100%)",
-    border: "#e6e1d1",
+    tint: "#fff3b8",
+    border: "#fff3b8",
   },
 ];

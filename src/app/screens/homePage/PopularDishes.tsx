@@ -7,6 +7,9 @@
  * The order comes from homePage/index.tsx, which asks the backend for
  * order=productViews; Product.service sorts every field except productPrice
  * descending, so the most-viewed product lands first.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * The heading is now "Today's favourites" with a highlighted word.
  * ========================================================================== */
 
 import { Box, Container, Stack } from "@mui/material";
@@ -36,9 +39,11 @@ export default function PopularDishes(props: PopularDishesProps) {
       <Container>
         <Stack className="popular-section">
           <Box className="ng-section-head">
-            <span className="ng-section-title">Popular Products</span>
+            <span className="ng-section-title">
+              Today's <span className="ng-hl">favourites</span>
+            </span>
             <Link to="/products" className="ng-link-all">
-              View All
+              See everything →
             </Link>
           </Box>
 

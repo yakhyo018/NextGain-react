@@ -96,7 +96,7 @@ export default function OrdersPage() {
         <Stack className={"order-left"}>
           <TabContext value={value}>
             <Box className={"order-nav-frame"}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Box>
                 <Tabs
                   value={value}
                   onChange={handleChange}

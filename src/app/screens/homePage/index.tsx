@@ -6,12 +6,17 @@
  *   - the ProductCollection.DISH filter was dropped (that value no longer
  *     exists in product.enum.ts), so the home rows now fetch all collections
  *   - SpecialOffer added, the lower sections share one Container
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ *   - HomeHero (welcome card + category tiles + perks) opens the page
+ *   - the stats band now sits between the two product rows
  * ========================================================================== */
 
 import { useEffect } from "react";
 import ActiveUsers from "./ActiveUsers";
 import Advertisement from "./Advertisement";
 import Events from "./Events";
+import HomeHero from "./HomeHero";
 import NewDishes from "./NewDishes";
 import PopularDishes from "./PopularDishes";
 import SpecialOffer from "./SpecialOffer";
@@ -51,7 +56,7 @@ export default function HomePage(props: HomePageProps) {
     product
       .getProducts({
         page: 1,
-        limit: 5,
+        limit: 4,
         order: "productViews",
       })
       .then((data) => {
@@ -62,7 +67,7 @@ export default function HomePage(props: HomePageProps) {
     product
       .getProducts({
         page: 1,
-        limit: 5,
+        limit: 4,
         order: "createdAt",
       })
       .then((data) => {
@@ -79,8 +84,9 @@ export default function HomePage(props: HomePageProps) {
 
   return (
     <div className={"homepage"}>
-      <Statistics />
+      <HomeHero />
       <PopularDishes onAdd={onAdd} />
+      <Statistics />
       <NewDishes onAdd={onAdd} />
 
       <Container>

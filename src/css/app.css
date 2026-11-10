@@ -4,6 +4,9 @@
  *
  * App shell (sticky footer) and the global MUI overrides for tabs,
  * pagination and accordions.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * Tabs become a pill switcher, pagination and accordions get round corners.
  * ========================================================================== */
 
 /* app shell — keeps every route on the same warm background and makes sure
@@ -40,25 +43,42 @@
 }
 
 .MuiTabs-root .MuiTabs-indicator {
-  background-color: var(--ng-green);
-  height: 2px;
+  display: none;
+}
+
+.MuiTabs-root {
+  display: inline-flex !important;
+  max-width: 100%;
+  min-height: 0 !important;
+  padding: 6px;
+  border-radius: var(--ng-r-pill);
+  background: var(--ng-surface-alt);
+}
+
+.MuiTabs-flexContainer {
+  gap: 4px;
 }
 
 .MuiTab-root {
   text-transform: none !important;
-  font-family: "Inter", sans-serif !important;
-  font-size: 13.5px !important;
-  font-weight: 600 !important;
+  font-family: var(--ng-font) !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
   color: var(--ng-text-muted) !important;
-  min-height: 46px !important;
+  min-height: 42px !important;
+  padding: 10px 22px !important;
+  border-radius: var(--ng-r-pill) !important;
 }
 
 .MuiTab-root.Mui-selected {
-  color: var(--ng-green) !important;
+  color: var(--ng-text) !important;
+  font-weight: 600 !important;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(35, 36, 58, 0.08);
 }
 
 .MuiPaginationItem-root {
-  border-radius: var(--ng-r-sm) !important;
+  border-radius: var(--ng-r-pill) !important;
   font-weight: 600 !important;
   color: var(--ng-text-muted) !important;
 }
@@ -70,7 +90,7 @@
 
 .MuiAccordion-root {
   box-shadow: none !important;
-  border: 1px solid var(--ng-border);
+  border: 2px solid var(--ng-border);
   border-radius: var(--ng-r) !important;
   background: var(--ng-surface) !important;
 }

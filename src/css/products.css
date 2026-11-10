@@ -7,6 +7,11 @@
  * @claude-change  2026-10-20  |  Mobile layout
  * Below 640px the category list scrolls sideways, the toolbar wraps and the
  * detail gallery puts its thumbnails under the main image.
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * Rounded filter cards with pill categories, pastel gallery and thumbs,
+ * bigger product title and price, pill quantity stepper, pastel trust chips
+ * and a soft spec grid.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -38,17 +43,16 @@
 
 .products .filter-card {
   background: var(--ng-surface);
-  border: 1px solid var(--ng-border);
-  border-radius: var(--ng-r);
-  padding: 18px;
+  border: 2px solid var(--ng-border);
+  border-radius: 28px;
+  padding: 22px;
 }
 
 .products .filter-title {
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 1.1px;
-  text-transform: uppercase;
-  color: var(--ng-text-faint);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--ng-text);
   margin-bottom: 14px;
 }
 
@@ -111,13 +115,13 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 8px 10px;
-  margin: 0 -10px;
+  padding: 11px 14px;
+  margin: 0 -10px 2px;
   border: 0;
-  border-radius: var(--ng-r-sm);
+  border-radius: var(--ng-r-pill);
   background: transparent;
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--ng-text-muted);
   cursor: pointer;
   text-align: left;
@@ -131,8 +135,8 @@
 }
 
 .products .category-list button.is-active {
-  background: var(--ng-green-light);
-  color: var(--ng-green-dark);
+  background: var(--ng-mint);
+  color: var(--ng-text);
   font-weight: 600;
 }
 
@@ -214,9 +218,9 @@
 .chosen-product .thumbs .thumb {
   width: 66px;
   height: 66px;
-  border-radius: var(--ng-r-sm);
-  border: 1px solid var(--ng-border);
-  background: var(--ng-surface);
+  border-radius: 18px;
+  border: 2px solid transparent;
+  background: var(--ng-peach);
   overflow: hidden;
   cursor: pointer;
   padding: 0;
@@ -226,20 +230,21 @@
 .chosen-product .thumbs .thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  padding: 6px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
 }
 
 .chosen-product .thumbs .thumb.is-active {
-  border-color: var(--ng-green);
-  box-shadow: 0 0 0 2px rgba(59, 110, 79, 0.14);
+  border-color: var(--ng-dark);
+  box-shadow: 0 0 0 2px rgba(155, 135, 255, 0.28);
 }
 
 .chosen-product .main-image {
   flex: 1;
   aspect-ratio: 1 / 1;
-  border-radius: var(--ng-r);
-  border: 1px solid var(--ng-border);
-  background: var(--ng-surface);
+  border-radius: 40px;
+  background: var(--ng-peach);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -247,9 +252,10 @@
 }
 
 .chosen-product .main-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 78%;
+  height: 82%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
 }
 
 /* info column */
@@ -259,19 +265,22 @@
 }
 
 .chosen-product .resto-name {
-  font-size: 12px;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--ng-text-faint);
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: var(--ng-r-pill);
+  background: var(--ng-lilac);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ng-text);
 }
 
 .chosen-product .product-name {
-  margin-top: 6px;
-  font-family: "Poppins", "Inter", sans-serif;
-  font-size: 27px;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.4px;
+  margin-top: 16px;
+  font-family: var(--ng-font);
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1.2px;
   color: var(--ng-text);
 }
 
@@ -281,7 +290,7 @@
   align-items: center;
   gap: 16px;
   margin-top: 12px;
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--ng-text-muted);
 }
 
@@ -292,9 +301,9 @@
 }
 
 .chosen-product .product-price {
-  margin-top: 16px;
-  font-family: "Poppins", "Inter", sans-serif;
-  font-size: 30px;
+  margin-top: 18px;
+  font-family: var(--ng-font);
+  font-size: 44px;
   font-weight: 800;
   letter-spacing: -0.6px;
   color: var(--ng-text);
@@ -305,7 +314,7 @@
 }
 
 .chosen-product .option-label {
-  font-size: 12.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--ng-text);
   margin-bottom: 9px;
@@ -320,89 +329,97 @@
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  border: 1px solid var(--ng-border);
-  border-radius: var(--ng-r-sm);
+  gap: 4px;
+  padding: 5px;
+  border-radius: var(--ng-r-pill);
+  background: var(--ng-surface-alt);
   overflow: hidden;
 }
 
 .chosen-product .qty-stepper button {
-  width: 34px;
+  width: 38px;
   height: 38px;
   border: 0;
-  background: transparent;
+  border-radius: 50%;
+  background: #fff;
   color: var(--ng-text-muted);
   font-size: 16px;
   cursor: pointer;
 }
 
 .chosen-product .qty-stepper button:hover {
-  background: var(--ng-surface-alt);
-  color: var(--ng-text);
+  background: var(--ng-dark);
+  color: #fff;
 }
 
 .chosen-product .qty-stepper .qty-val {
   min-width: 40px;
   text-align: center;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .chosen-product .button-box {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 24px;
-  max-width: 340px;
+  margin-top: 28px;
+  max-width: 380px;
 }
 
 .chosen-product .button-box .MuiButton-root {
-  height: 44px;
+  height: 54px;
+  font-size: 16px;
 }
 
 .chosen-product .trust-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 20px;
-  margin-top: 26px;
-  padding-top: 20px;
-  border-top: 1px solid var(--ng-border);
+  gap: 10px;
+  margin-top: 28px;
 }
 
 .chosen-product .trust-row .trust {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 12.5px;
-  color: var(--ng-text-muted);
+  padding: 10px 16px;
+  border-radius: var(--ng-r-pill);
+  background: var(--ng-mint);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ng-text);
 }
+
+.chosen-product .trust-row .trust:nth-child(2) { background: var(--ng-sky); }
+.chosen-product .trust-row .trust:nth-child(3) { background: var(--ng-lemon); }
 
 .chosen-product .trust-row .trust svg {
   font-size: 17px;
-  color: var(--ng-green);
+  color: var(--ng-text);
 }
 
 /* description panel */
 .chosen-product .detail-panel {
-  margin-top: 52px;
+  margin-top: 56px;
   background: var(--ng-surface);
-  border: 1px solid var(--ng-border);
-  border-radius: var(--ng-r);
-  padding: 26px 28px;
+  border: 2px solid var(--ng-border);
+  border-radius: 36px;
+  padding: 34px 36px;
 }
 
 .chosen-product .detail-panel h3 {
   margin: 0 0 12px;
-  font-family: "Poppins", "Inter", sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+  font-family: var(--ng-font);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
 }
 
 .chosen-product .detail-panel .product-desc {
   margin: 0;
-  font-size: 13.5px;
+  font-size: 16px;
   line-height: 1.85;
   color: var(--ng-text-muted);
   max-width: 780px;
@@ -411,31 +428,27 @@
 .chosen-product .spec-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  margin-top: 24px;
-  background: var(--ng-border);
-  border: 1px solid var(--ng-border);
-  border-radius: var(--ng-r-sm);
-  overflow: hidden;
+  gap: 12px;
+  margin-top: 26px;
 }
 
 .chosen-product .spec-grid .spec {
   margin: 0;
-  background: var(--ng-surface);
-  padding: 14px 16px;
+  background: var(--ng-surface-alt);
+  border-radius: 22px;
+  padding: 16px 20px;
 }
 
 .chosen-product .spec-grid .spec dt {
-  font-size: 11px;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--ng-text-faint);
+  font-size: 13px;
+  color: var(--ng-text-muted);
 }
 
 .chosen-product .spec-grid .spec dd {
   margin: 4px 0 0;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: capitalize;
   color: var(--ng-text);
 }
 
@@ -514,15 +527,16 @@
     flex-shrink: 0;
     width: auto;
     margin: 0;
-    padding: 7px 14px;
+    padding: 9px 16px;
     gap: 8px;
-    border: 1px solid var(--ng-border);
+    border: 0;
     border-radius: var(--ng-r-pill);
+    background: var(--ng-surface-alt);
     white-space: nowrap;
   }
 
   .products .category-list button.is-active {
-    border-color: var(--ng-green);
+    background: var(--ng-mint);
   }
 
   .products .single-search-input {
@@ -564,12 +578,17 @@
     flex-shrink: 0;
   }
 
+  .chosen-product .main-image {
+    border-radius: 30px;
+  }
+
   .chosen-product .product-name {
-    font-size: 22px;
+    font-size: 28px;
+    letter-spacing: -0.8px;
   }
 
   .chosen-product .product-price {
-    font-size: 25px;
+    font-size: 34px;
   }
 
   .chosen-product .button-box {
@@ -578,7 +597,12 @@
 
   .chosen-product .detail-panel {
     margin-top: 36px;
-    padding: 20px 18px;
+    padding: 22px 18px;
+    border-radius: 28px;
+  }
+
+  .chosen-product .detail-panel h3 {
+    font-size: 22px;
   }
 
   .chosen-product .related-frame {

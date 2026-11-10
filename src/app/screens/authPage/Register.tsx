@@ -9,6 +9,10 @@
  *   Full Name      -> memberNick
  *   Phone          -> memberPhone
  *   Password       -> memberPassword
+ *
+ * @claude-change  2026-11-10  |  Soft Pastel redesign
+ * The gym photo is gone: the quote sits on a pastel panel with a small
+ * product shelf, next to the form card. Handlers are unchanged.
  * ========================================================================== */
 
 import { useState } from "react";
@@ -64,15 +68,12 @@ export default function RegisterPage() {
   };
 
   return (
-    <div
-      className={"auth-page"}
-      style={{ backgroundImage: "url(/img/signup.png)" }}
-    >
+    <div className={"auth-page auth-page--register"}>
       <AuthNavbar title="Register" />
 
       <Box className={"auth-body"}>
         <Container className={"auth-inner"}>
-          {/* motivational line, sitting low over the photo */}
+          {/* motivational line on a pastel panel, with a little product shelf */}
           <Box className={"auth-quote"}>
             <span className={"quote-kicker"}>NextGain</span>
             <h3>
@@ -84,6 +85,17 @@ export default function RegisterPage() {
               The best day to begin was yesterday. The second best is the one
               you are standing in.
             </p>
+            <Box className={"auth-shelf"}>
+              <span className={"auth-shelf-item auth-shelf-item--mint"}>
+                <img src="/img/categories/protein.webp" alt="" />
+              </span>
+              <span className={"auth-shelf-item auth-shelf-item--peach"}>
+                <img src="/img/categories/pre-workout.png" alt="" />
+              </span>
+              <span className={"auth-shelf-item auth-shelf-item--sky"}>
+                <img src="/img/categories/creatine.webp" alt="" />
+              </span>
+            </Box>
           </Box>
 
           <Box className={"auth-card"}>
