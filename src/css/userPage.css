@@ -93,7 +93,7 @@
 .user-page .order-user-address {
   margin-top: 12px;
   font-size: 15px;
-  color: #57587a;
+  color: var(--ng-text-soft);
   text-align: center;
 }
 
@@ -187,7 +187,7 @@
 .user-page .media-change-box p {
   margin: 2px 0 8px;
   font-size: 13.5px;
-  color: #4c6b5d;
+  color: #24513f;
 }
 
 .user-page .input-frame {

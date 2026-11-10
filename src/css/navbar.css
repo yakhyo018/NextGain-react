@@ -20,7 +20,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 253, 248, 0.92);
+  background: rgba(246, 242, 233, 0.92);
   backdrop-filter: saturate(1.4) blur(12px);
   -webkit-backdrop-filter: saturate(1.4) blur(12px);
 }
@@ -177,7 +177,7 @@
   margin: 10px 0 0;
   max-width: 460px;
   font-size: 17px;
-  color: #57587a;
+  color: var(--ng-text-soft);
 }
 
 .other-navbar .page-banner .crumbs {

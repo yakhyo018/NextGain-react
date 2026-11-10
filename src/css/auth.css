@@ -170,7 +170,7 @@
   max-width: 420px;
   font-size: 18px;
   line-height: 1.6;
-  color: #57587a;
+  color: var(--ng-text-soft);
 }
 
 .auth-shelf {

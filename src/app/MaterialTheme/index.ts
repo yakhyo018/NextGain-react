@@ -10,18 +10,18 @@ const light = {
   palette: {
     type: "light",
     background: {
-      default: "#FFFDF8", // sahifa foni (krem) — Soft Pastel
+      default: "#F6F2E9", // sahifa foni (krem) — Soft Pastel
       paper: common.white, // kartochkalar foni
     },
     primary: {
       contrastText: common.white,
-      main: "#23243A", // to'q siyoh tugmalar (Soft Pastel, 2026-11-10)
+      main: "#1A1B2E", // to'q siyoh tugmalar (Soft Pastel, 2026-11-10)
       light: "#3A3B56",
       dark: "#121326",
     },
     secondary: {
       contrastText: common.white,
-      main: "#23243A", // matn / to'q yuzalar
+      main: "#1A1B2E", // matn / to'q yuzalar
       light: "#333333",
       dark: "#000000",
     },
@@ -32,11 +32,11 @@ const light = {
       main: "#F5A623", // yulduzcha reyting rangi
     },
     text: {
-      primary: "#23243A",
-      secondary: "#6C6D86", // narx tagidagi tavsif, meta matnlar
+      primary: "#1A1B2E",
+      secondary: "#4D4E6A", // narx tagidagi tavsif, meta matnlar
       dark: common.black,
     },
-    divider: "#F1EFE8",
+    divider: "#E4DED0",
   },
   components: {
     MuiContainer: {
@@ -49,7 +49,7 @@ const light = {
     MuiCssBaseline: {
       styleOverrides: {
         html: { height: "100%" },
-        body: { background: "#FFFDF8", height: "100%", minHeight: "100%" },
+        body: { background: "#F6F2E9", height: "100%", minHeight: "100%" },
       },
     },
     MuiButton: {

@@ -24,37 +24,40 @@
 
 :root {
   /* @claude-change 2026-11-10 | Soft Pastel — the old names are kept so every
-     page stylesheet follows; "green" is now the ink accent, pastels are new. */
+     page stylesheet follows; "green" is now the ink accent, pastels are new.
+     Second pass the same day: deeper pastels, darker text and lines and a
+     warmer background, so colour and copy hold up against the white cards. */
   --ng-font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
 
   /* surfaces */
-  --ng-bg: #fffdf8;
+  --ng-bg: #f6f2e9;
   --ng-surface: #ffffff;
-  --ng-surface-alt: #f4f2ec;
-  --ng-dark: #23243a;
+  --ng-surface-alt: #ebe6da;
+  --ng-dark: #1a1b2e;
   --ng-dark-2: #2e2f48;
   --ng-dark-3: #3a3b56;
 
   /* pastels */
-  --ng-mint: #c9f0de;
-  --ng-lilac: #e3dcff;
-  --ng-lilac-deep: #d2c7ff;
-  --ng-peach: #ffe1cf;
-  --ng-sky: #d4ecff;
-  --ng-lemon: #fff3b8;
-  --ng-coral: #ff7a59;
+  --ng-mint: #9fe2c2;
+  --ng-lilac: #c7b9ff;
+  --ng-lilac-deep: #ab98ff;
+  --ng-peach: #ffc29c;
+  --ng-sky: #a9d6ff;
+  --ng-lemon: #ffe27a;
+  --ng-coral: #ff5a36;
 
   /* brand (ink accent) */
-  --ng-green: #23243a;
+  --ng-green: #1a1b2e;
   --ng-green-dark: #121326;
-  --ng-green-light: #e8f8f0;
-  --ng-green-soft: #c9f0de;
+  --ng-green-light: #d3f3e3;
+  --ng-green-soft: #9fe2c2;
 
   /* text */
-  --ng-text: #23243a;
-  --ng-text-muted: #6c6d86;
-  --ng-text-faint: #9a9bb0;
+  --ng-text: #1a1b2e;
+  --ng-text-soft: #3b3c5a;
+  --ng-text-muted: #4d4e6a;
+  --ng-text-faint: #7a7b94;
   --ng-on-dark: #ffffff;
   --ng-on-dark-muted: #b9bad0;
 
@@ -64,8 +67,8 @@
   --ng-blue: #4a7fd6;
 
   /* lines */
-  --ng-border: #f1efe8;
-  --ng-border-strong: #e4e1d6;
+  --ng-border: #e4ded0;
+  --ng-border-strong: #d2cbb9;
   --ng-border-dark: #3a3b56;
 
   /* shape */
@@ -76,7 +79,7 @@
 
   /* elevation */
   --ng-shadow-sm: 0 1px 3px rgba(35, 36, 58, 0.05);
-  --ng-shadow: 0 8px 24px rgba(35, 36, 58, 0.07);
+  --ng-shadow: 0 10px 28px rgba(26, 27, 46, 0.10);
   --ng-shadow-lg: 0 18px 44px rgba(35, 36, 58, 0.12);
 
   /* rhythm */
