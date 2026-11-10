@@ -80,15 +80,15 @@ export default function Footer() {
               <Box className="foot-category-link">
                 <Box className="find-us">
                   <PhoneIcon />
-                  <div>+998 90 123 45 67</div>
+                  <div>01066872218</div>
                 </Box>
                 <Box className="find-us">
                   <MailIcon />
-                  <div>support@nextgain.com</div>
+                  <div>choriyevyahyo@gmail.com</div>
                 </Box>
                 <Box className="find-us">
                   <PlaceIcon />
-                  <div>125 Fitness St, Tashkent, Uzbekistan</div>
+                  <div>South Korea, Busan</div>
                 </Box>
               </Box>
             </Box>

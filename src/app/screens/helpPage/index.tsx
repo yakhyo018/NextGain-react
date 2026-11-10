@@ -93,15 +93,15 @@ export default function HelpPage() {
                   <p>We usually reply within one business day.</p>
                   <Box className={"contact-line"}>
                     <PhoneIcon />
-                    <div>+998 90 123 45 67</div>
+                    <div>01066872218</div>
                   </Box>
                   <Box className={"contact-line"}>
                     <MailIcon />
-                    <div>support@nextgain.com</div>
+                    <div>choriyevyahyo@gmail.com</div>
                   </Box>
                   <Box className={"contact-line"}>
                     <PlaceIcon />
-                    <div>125 Fitness St, Tashkent, Uzbekistan</div>
+                    <div>South Korea, Busan</div>
                   </Box>
                   <Box className={"contact-line"}>
                     <ScheduleIcon />
